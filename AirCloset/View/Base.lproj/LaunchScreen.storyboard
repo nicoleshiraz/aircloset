@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bckgrd" translatesAutoresizingMaskIntoConstraints="NO" id="1Zo-j4-3Y4">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="airCloset" translatesAutoresizingMaskIntoConstraints="NO" id="4Bo-Se-CYc">
+                                <rect key="frame" x="109" y="248" width="157" height="171"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="171" id="1cB-ez-fg7"/>
+                                    <constraint firstAttribute="width" constant="157" id="fog-df-wwZ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <constraints>
+                            <constraint firstItem="4Bo-Se-CYc" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="4yb-t9-fkM"/>
+                            <constraint firstAttribute="trailing" secondItem="1Zo-j4-3Y4" secondAttribute="trailing" id="Uz6-3X-kBR"/>
+                            <constraint firstItem="1Zo-j4-3Y4" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="hLc-1Y-75S"/>
+                            <constraint firstItem="4Bo-Se-CYc" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="lRJ-DA-VwF"/>
+                            <constraint firstAttribute="bottom" secondItem="1Zo-j4-3Y4" secondAttribute="bottom" id="nQx-Md-Kmq"/>
+                            <constraint firstItem="1Zo-j4-3Y4" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="oaC-Xv-8kU"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="airCloset" width="157" height="171"/>
+        <image name="bckgrd" width="1125" height="2436"/>
+    </resources>
+</document>

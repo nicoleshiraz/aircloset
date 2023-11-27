@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ExploreUserCVC" id="RLi-MI-u7U" customClass="ExploreUserCVC" customModule="AirCloset" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="157" height="159"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bGc-4u-4WF">
+                <rect key="frame" x="0.0" y="0.0" width="157" height="159"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxv-xW-rTg" customClass="CustomView" customModule="AirCloset" customModuleProvider="target">
+                        <rect key="frame" x="5" y="0.0" width="147" height="149"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagePlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Jz9-lF-YZr" customClass="CustomImageView" customModule="AirCloset" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="147" height="149"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Zt-dt-A4H">
+                                <rect key="frame" x="10" y="134" width="127" height="0.0"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="7Zt-dt-A4H" secondAttribute="bottom" constant="15" id="0mz-2R-hJL"/>
+                            <constraint firstAttribute="trailing" secondItem="7Zt-dt-A4H" secondAttribute="trailing" constant="10" id="Qi5-Z6-u6v"/>
+                            <constraint firstAttribute="trailing" secondItem="Jz9-lF-YZr" secondAttribute="trailing" id="bR0-ui-Qyt"/>
+                            <constraint firstItem="7Zt-dt-A4H" firstAttribute="leading" secondItem="Rxv-xW-rTg" secondAttribute="leading" constant="10" id="d9e-Au-Q0m"/>
+                            <constraint firstAttribute="bottom" secondItem="Jz9-lF-YZr" secondAttribute="bottom" id="hYk-GQ-AXQ"/>
+                            <constraint firstItem="Jz9-lF-YZr" firstAttribute="top" secondItem="Rxv-xW-rTg" secondAttribute="top" id="j3l-Ad-Lpo"/>
+                            <constraint firstItem="Jz9-lF-YZr" firstAttribute="leading" secondItem="Rxv-xW-rTg" secondAttribute="leading" id="pDx-15-6lj"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Rxv-xW-rTg" secondAttribute="bottom" constant="10" id="GKq-mj-5K3"/>
+                    <constraint firstAttribute="trailing" secondItem="Rxv-xW-rTg" secondAttribute="trailing" constant="5" id="h0d-2q-gpp"/>
+                    <constraint firstItem="Rxv-xW-rTg" firstAttribute="leading" secondItem="bGc-4u-4WF" secondAttribute="leading" constant="5" id="lpV-eR-VvL"/>
+                    <constraint firstItem="Rxv-xW-rTg" firstAttribute="top" secondItem="bGc-4u-4WF" secondAttribute="top" id="xsF-oa-03n"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="157" height="159"/>
+            <connections>
+                <outlet property="imgUser" destination="Jz9-lF-YZr" id="h1B-wf-84Z"/>
+                <outlet property="nameLbl" destination="7Zt-dt-A4H" id="GE0-BE-iq5"/>
+            </connections>
+            <point key="canvasLocation" x="-407" y="-43"/>
+        </collectionViewCell>
+    </objects>
+    <designables>
+        <designable name="Jz9-lF-YZr">
+            <size key="intrinsicContentSize" width="681" height="528"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="imagePlaceholder" width="681" height="528"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
