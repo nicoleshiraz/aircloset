@@ -29,7 +29,8 @@ class VerificationVC: UIViewController {
        // textFieldTargetAction()
         verifyVw.layer.cornerRadius = 50
         verifyVw.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        
+        Store.newAccount = true
+        Store.newAccountPopUp = true
         emailIdLbl.text = Store.userDetails?.body?.email
     }
     

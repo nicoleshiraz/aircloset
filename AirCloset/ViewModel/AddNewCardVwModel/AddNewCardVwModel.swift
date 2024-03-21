@@ -17,10 +17,9 @@ class AddNewCardvwModel : NSObject{
     var uploadData: UploadImageBody?
     var verificationData: VerificationModelBody?
     
-    func addNewCardApi(holderName : String,cardNumber : Int,expMonth : Int, expYear : Int, cvv : Int ){
+    func addNewCardApi(holderName : String,cardNumber : Int,expMonth : Int, expYear : Int, cvv : Int , cardID: String){
         
-        let param = ["cardName" : holderName,"number": cardNumber, "exp_month" : expMonth, "exp_year": expYear,"cvc" : cvv] as [String : Any]
-        
+        let param = ["cardName" : holderName,"number": cardNumber, "exp_month" : expMonth, "exp_year": expYear,"cvc" : cvv,"cardToken":cardID] as [String : Any]
         WebService.service(.addNewCard, param: param, service: .post, showHud: true) { (addCardData : AddNewCardModel, data,json ) in
             self.onSuccess?()
         }

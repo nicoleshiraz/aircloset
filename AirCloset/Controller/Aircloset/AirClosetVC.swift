@@ -75,7 +75,7 @@ class AirClosetVC: UIViewController {
             vwModel.getClosetListingApi(type: 1)
             vwModel.onSuccess = { [weak self] in
                 self?.orderByMeModel = self?.vwModel.closetListingOrderByMeInfo
-                self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.reversed()
+                self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body
                 self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.filter({ $0.cancelStatus == 0 })
                 self?.orderTap()
             }
@@ -85,7 +85,7 @@ class AirClosetVC: UIViewController {
             vwModel.onSuccess = {[weak self] in
                 self?.orderByOtherModel = self?.vwModel.closetListingOrderByOthersInfo
                 self?.orderByOtherModel?.body = self?.vwModel.closetListingOrderByOthersInfo?.body?.filter({ $0.cancelStatus != 1 })
-                self?.orderByOtherModelList = self?.vwModel.closetListingOrderByOthersInfo?.body?.reversed()
+                self?.orderByOtherModelList = self?.vwModel.closetListingOrderByOthersInfo?.body
                 self?.myorderTap()
             }
             myorderTap()
@@ -104,7 +104,7 @@ class AirClosetVC: UIViewController {
                 vwModel.getClosetListingApi(type: 1)
                 vwModel.onSuccess = { [weak self] in
                     self?.orderByMeModel = self?.vwModel.closetListingOrderByMeInfo
-                    self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.reversed()
+                    self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body
                     self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.filter({ $0.cancelStatus == 0 })
                     self?.orderTap()
                 }
@@ -114,7 +114,7 @@ class AirClosetVC: UIViewController {
                 vwModel.onSuccess = {[weak self] in
                     self?.orderByOtherModel = self?.vwModel.closetListingOrderByOthersInfo
                     self?.orderByOtherModel?.body = self?.vwModel.closetListingOrderByOthersInfo?.body?.filter({ $0.cancelStatus != 1 })
-                    self?.orderByOtherModelList = self?.vwModel.closetListingOrderByOthersInfo?.body?.reversed()
+                    self?.orderByOtherModelList = self?.vwModel.closetListingOrderByOthersInfo?.body
                     self?.myorderTap()
                 }
                 myorderTap()
@@ -123,6 +123,7 @@ class AirClosetVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     
@@ -161,7 +162,7 @@ class AirClosetVC: UIViewController {
         vwModel.getClosetListingApi(type: 1)
         vwModel.onSuccess = { [weak self] in
             self?.orderByMeModel = self?.vwModel.closetListingOrderByMeInfo
-            self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.reversed()
+            self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body
             self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.filter({ $0.cancelStatus == 0 })
             self?.orderTap()
             
@@ -174,7 +175,7 @@ class AirClosetVC: UIViewController {
         vwModel.getClosetListingApi(type: 2)
         vwModel.onSuccess = {[weak self] in
             self?.orderByOtherModel = self?.vwModel.closetListingOrderByOthersInfo
-            self?.orderByOtherModelList = self?.vwModel.closetListingOrderByOthersInfo?.body?.reversed()
+            self?.orderByOtherModelList = self?.vwModel.closetListingOrderByOthersInfo?.body
 //            self?.orderByOtherModel?.body = self?.vwModel.closetListingOrderByOthersInfo?.body?.filter({ $0.cancelStatus != 1 })
             self?.myorderTap()
         }
@@ -226,21 +227,24 @@ extension AirClosetVC: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = airClosetTableVw.dequeueReusableCell(withIdentifier: "AirClosetTVCell", for: indexPath) as! AirClosetTVCell
+        cell.viewReceiptBtn.isHidden = false
         if isFrm == "orders"{
+            cell.viewReceiptBtn.isHidden = false
+            cell.imgProof.isHidden = false
             cell.statusLbl.isHidden = false
-            
             cell.cosTableImgVw.sd_setImage(with: URL.init(string: productImageUrl + (self.orderByMeModelList?[indexPath.row].productID?.image?.first ?? "" )),placeholderImage : UIImage(named: "profileIcon"))
             cell.airClosetTitleLbl.text = orderByMeModelList?[indexPath.row].productID?.name?.capitalizeFirstLetter() ?? ""
-            cell.sizeLbl.text = orderByMeModelList?[indexPath.row].productID?.sizeID?.name ?? ""
-            cell.startDate.text = orderByMeModelList?[indexPath.row].startDate ?? ""
-            cell.finishLabel.text = orderByMeModelList?[indexPath.row].endDate ?? ""
-            cell.pricePrNtLbl.text = "$\(orderByMeModelList?[indexPath.row].productID?.price ?? 0)/Night"
+            cell.sizeLbl.text = "Size: \(orderByMeModelList?[indexPath.row].productID?.sizeID?.name ?? "")"
+            cell.startDate.text = "Start: \(orderByMeModelList?[indexPath.row].startDate ?? "")"
+            cell.finishLabel.text = "Finish: \(orderByMeModelList?[indexPath.row].endDate ?? "")"
+            var total = (orderByMeModelList?[indexPath.row].productID?.price ?? 0) * (orderByMeModelList?[indexPath.row].totalDays ?? 0)
+            cell.pricePrNtLbl.text = "$\(total) (\("$\(orderByMeModelList?[indexPath.row].productID?.price ?? 0) x \((orderByMeModelList?[indexPath.row].totalDays ?? 0))"))"
+//            cell.pricePrNtLbl.text = "$\(orderByMeModelList?[indexPath.row].productID?.price ?? 0)/Night"
             cell.viewReceiptBtn.tag = indexPath.row
             cell.viewReceiptBtn.addTarget(self, action: #selector(viewReceiptButtonAction), for: .touchUpInside)
             //cell.descritptionLbl.text = orderByMeModelList?[indexPath.row].productID?.description ?? ""
             
             //MARK: Edit or Cancel Order
-            
             
             let result = isDateGreaterThanCurrentDate(dateString: orderByMeModelList?[indexPath.row].endDate ?? "")
             cell.editBtn.tag = indexPath.row
@@ -252,80 +256,82 @@ extension AirClosetVC: UITableViewDelegate, UITableViewDataSource {
                 if orderByMeModelList?[indexPath.row].orderStatus == 0{
                     cell.statusLbl.text = "Status: Pending"
                     cell.statusLbl.textColor = UIColor.black
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.dotsBtn.isHidden = false
                    
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 1{
                     cell.statusLbl.text = "Status: Accepted"
                     cell.statusLbl.textColor = UIColor.black
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 2 && result == true{
                     cell.statusLbl.text = "Status: Delivered"
                     cell.statusLbl.textColor = UIColor.black
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 2 && result == false {
                     cell.statusLbl.text = "Status: Return Due"
                     cell.statusLbl.textColor = UIColor.red
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 3{
                     cell.statusLbl.text = "Status: Returned"
                     cell.statusLbl.textColor = UIColor.black
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 4{
                     cell.statusLbl.text = "Status: Completed"
                     cell.statusLbl.textColor = UIColor.black
-                    cell.viewReceiptBtn.isHidden = false
+//                    cell.viewReceiptBtn.isHidden = false
                     cell.dotsBtn.isHidden = true
                 }
             } else {
                 if orderByMeModelList?[indexPath.row].orderStatus == 0{
                     cell.statusLbl.text = "Status: Pending"
                     cell.statusLbl.textColor = UIColor.black
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.dotsBtn.isHidden = false
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 1{
                     cell.statusLbl.text = "Status: Accepted"
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.statusLbl.textColor = UIColor.black
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 2 && result == true{
-                    cell.statusLbl.text = "Status: Pick Up"
-                    cell.viewReceiptBtn.isHidden = true
+                    cell.statusLbl.text = "Status: Picked Up"
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.statusLbl.textColor = UIColor.black
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 2 && result == false {
                     cell.statusLbl.text = "Status: Return Due"
                     cell.statusLbl.textColor = UIColor.red
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 3{
                     cell.statusLbl.text = "Status: Returned"
-                    cell.viewReceiptBtn.isHidden = true
+//                    cell.viewReceiptBtn.isHidden = true
 
                     cell.statusLbl.textColor = UIColor.black
                     cell.dotsBtn.isHidden = true
                 } else if orderByMeModelList?[indexPath.row].orderStatus == 4{
                     cell.statusLbl.text = "Status: Completed"
                     cell.statusLbl.textColor = UIColor.black
-                    cell.viewReceiptBtn.isHidden = false
-
+//                    cell.viewReceiptBtn.isHidden = false
                     cell.dotsBtn.isHidden = true
                 }
             }
         } else {
+            cell.imgProof.isHidden = true
             cell.viewReceiptBtn.isHidden = true
+            cell.viewReceiptBtn.tag = indexPath.row
+            cell.viewReceiptBtn.addTarget(self, action: #selector(viewReceiptButtonAction), for: .touchUpInside)
             //MARK: Edit or Cancel Order
             cell.dotsBtn.isHidden = true
             cell.editBtn.tag = indexPath.row
@@ -335,12 +341,13 @@ extension AirClosetVC: UITableViewDelegate, UITableViewDataSource {
             
             cell.cosTableImgVw.sd_setImage(with: URL.init(string: productImageUrl + (self.orderByOtherModelList?[indexPath.row].productID?.image?.first ?? "" )),placeholderImage : UIImage(named: "profileIcon"))
             cell.airClosetTitleLbl.text = orderByOtherModelList?[indexPath.row].productID?.name?.capitalizeFirstLetter() ?? ""
-            cell.sizeLbl.text = orderByOtherModelList?[indexPath.row].productID?.sizeID?.name ?? ""
+            cell.sizeLbl.text = "Size: \(orderByOtherModelList?[indexPath.row].productID?.sizeID?.name ?? "")"
            // cell.descritptionLbl.text = orderByOtherModelList?[indexPath.row].productID?.description ?? ""
-            cell.startDate.text = orderByOtherModelList?[indexPath.row].startDate ?? ""
-            cell.finishLabel.text = orderByOtherModelList?[indexPath.row].endDate ?? ""
-            cell.pricePrNtLbl.text = "$\(orderByOtherModelList?[indexPath.row].productID?.price ?? 0)/Night"
-            //cell.descritptionLbl.text = orderByOtherModelList?[indexPath.row].productID?.description ?? ""
+            cell.startDate.text = "Start: \(orderByOtherModelList?[indexPath.row].startDate ?? "")"
+            cell.finishLabel.text = "Finish: \(orderByOtherModelList?[indexPath.row].endDate ?? "")"
+            var total = (orderByOtherModelList?[indexPath.row].productID?.price ?? 0) * (orderByOtherModelList?[indexPath.row].totalDays ?? 0)
+            cell.pricePrNtLbl.text = "$\(total) (\("$\(orderByOtherModelList?[indexPath.row].productID?.price ?? 0) x \((orderByOtherModelList?[indexPath.row].totalDays ?? 0))"))"
+//            cell.pricePrNtLbl.text = "$\(orderByOtherModelList?[indexPath.row].productID?.price ?? 0)/Night"
             if orderByOtherModelList?[indexPath.row].orderType == 1{
                 if orderByOtherModelList?[indexPath.row].orderStatus == 0{
                     cell.statusLbl.text = "Status: Pending"
@@ -367,7 +374,7 @@ extension AirClosetVC: UITableViewDelegate, UITableViewDataSource {
                     cell.statusLbl.text = "Status: Accepted"
                     cell.statusLbl.textColor = UIColor.black
                 } else if orderByOtherModelList?[indexPath.row].orderStatus == 2{
-                    cell.statusLbl.text = "Status: Pick Up"
+                    cell.statusLbl.text = "Status: Picked Up"
                     cell.statusLbl.textColor = UIColor.black
                 } else if orderByOtherModelList?[indexPath.row].orderStatus == 3{
                     cell.statusLbl.text = "Status: Returned"
@@ -438,7 +445,11 @@ extension AirClosetVC: UITableViewDelegate, UITableViewDataSource {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ViewReceiptVC") as! ViewReceiptVC
         isTab = "ViewReceipt"
         vc.comeFrom = "order"
-        Singletone.shared.productId = orderByMeModelList?[sender.tag].id
+        if isFrm == "orders"{
+            Singletone.shared.productId = orderByMeModelList?[sender.tag].id
+        } else {
+            Singletone.shared.productId = orderByOtherModelList?[sender.tag].id
+        }
         self.navigationController?.pushViewController(vc, animated: false)
     }
 
@@ -457,8 +468,8 @@ extension AirClosetVC: UITableViewDelegate, UITableViewDataSource {
                 self.vwModel.getClosetListingApi(type: 1)
                 self.vwModel.onSuccess = { [weak self] in
                     self?.orderByMeModel = self?.vwModel.closetListingOrderByMeInfo
-                    self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.reversed()
-                    self?.orderByMeModel?.body = self?.vwModel.closetListingOrderByMeInfo?.body?.filter({ $0.cancelStatus != 1 })
+                    self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body
+                    self?.orderByMeModelList = self?.vwModel.closetListingOrderByMeInfo?.body?.filter({ $0.cancelStatus == 0 })
                     self?.orderTap()
                 }
             } else {

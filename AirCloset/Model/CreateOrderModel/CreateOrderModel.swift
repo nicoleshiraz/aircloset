@@ -18,7 +18,7 @@ struct CreateOrderModel: Codable {
 struct CreateOrderModelBody: Codable {
     var startDate, endDate: String?
     var totalDays, productPrice, totalPrice, status: Int?
-    var serviceCharge: Int?
+    var serviceCharge: Double?
     var phoneNumber: Int?
     var countryCode,address: String?
     var isReserved, cancelStatus, orderStatus, deleiveryStatus: Int?

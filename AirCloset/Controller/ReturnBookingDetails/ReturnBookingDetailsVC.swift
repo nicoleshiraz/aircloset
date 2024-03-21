@@ -62,7 +62,6 @@ class ReturnBookingDetailsVC: UIViewController {
         returnBookingColVw.delegate = self
         returnBookingColVw.dataSource = self
         //returnBookingPageController.numberOfPages = 3
-        print(productId)
         getProductDetailApii()
     }
 
@@ -145,7 +144,7 @@ class ReturnBookingDetailsVC: UIViewController {
             self?.locationlbl.text = "Location: \(self?.vwModel.getSingleOrderModelInfo?.body?.productID?.location?.name ?? "")"
             self?.priceAndNightCountLbl.text = "$\(self?.vwModel.getSingleOrderModelInfo?.body?.productPrice ?? 0)" + " x \(self?.vwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0) Nights"
             self?.totalRentLbl.text = "$\(self?.vwModel.getSingleOrderModelInfo?.body?.totalPrice ?? 0)"
-            self?.serviceChargeLbl.text = "$\(self?.vwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? "") "
+            self?.serviceChargeLbl.text = "$\(self?.vwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? 0) "
             self?.pickUpDate.text = self?.vwModel.getSingleOrderModelInfo?.body?.startDate ?? ""
             self?.returnDate.text = self?.vwModel.getSingleOrderModelInfo?.body?.endDate ?? ""
             self?.totalPricewithServiceChrgeLbl.text = "$\(self?.vwModel.getSingleOrderModelInfo?.body?.totalPrice ?? 0)"

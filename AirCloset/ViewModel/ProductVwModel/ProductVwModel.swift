@@ -37,5 +37,13 @@ class ProductVwModel : NSObject{
             onSuccessApi()
         }
     }
+    
+    func returnProofCloth(paramss: [String:Any], onSuccessApi: @escaping (()->())){
+        WebService.service(.returProof,param: paramss, service: .post, showHud: true) { (modelData : CommonModel, data, json) in
+            CommonUtilities.shared.showSwiftAlert(message: modelData.message ?? "", isSuccess: .success)
+            onSuccessApi()
+        }
+    }
+
 
 }

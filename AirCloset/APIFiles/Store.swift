@@ -36,6 +36,24 @@ class Store {
             return Store.getValue(.walkThrough) as? Bool ?? false
         }
     }
+    
+    class var newAccount: Bool?
+    {
+        set{
+            Store.saveValue(newValue,.walkThrough)
+        }get{
+            return Store.getValue(.walkThrough) as? Bool ?? false
+        }
+    }
+    
+    class var newAccountPopUp: Bool?
+    {
+        set{
+            Store.saveValue(newValue,.walkThrough)
+        }get{
+            return Store.getValue(.walkThrough) as? Bool ?? false
+        }
+    }
 
     class var userDetails: SignUpModel?
     {

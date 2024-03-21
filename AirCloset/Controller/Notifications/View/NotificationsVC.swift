@@ -29,6 +29,7 @@ class NotificationsVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        notTableVw.separatorStyle = .none
         getNotification()
     }
 }

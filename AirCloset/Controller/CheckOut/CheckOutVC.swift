@@ -14,6 +14,8 @@ class CheckOutVC: UIViewController {
     
     //MARK: -> Outlets & Variables
     
+    @IBOutlet weak var tblHeight: NSLayoutConstraint!
+    @IBOutlet weak var shippVieww: UIView!
     @IBOutlet weak var lblExpresss: UILabel!
     @IBOutlet weak var pickVIeww: CustomView!
     @IBOutlet weak var checkOutTableVw: UITableView!
@@ -38,6 +40,15 @@ class CheckOutVC: UIViewController {
     @IBOutlet weak var totalLbl: UILabel!
     @IBOutlet weak var datelbl: UILabel!
     
+    //Jujhar
+    @IBOutlet weak var lblPickTitle: UILabel!
+    @IBOutlet weak var lblAddressOrText: UILabel!
+    @IBOutlet weak var btnAddCard: UIButton!
+    @IBOutlet weak var lblPayingWith: UILabel!
+    @IBOutlet weak var paymentView: UIView!
+    
+    @IBOutlet weak var shipHeight: NSLayoutConstraint!
+    
     var cardImgAry = ["Icon metro-visa","Icon awesome-credit-card",
                       "Icon awesome-cc-paypal","applePay"]
     var indxValue = -1
@@ -48,12 +59,12 @@ class CheckOutVC: UIViewController {
     var chaarges = Double()
     var createdOrderData : CreateOrderModel?
     var comesFrom = String()
-    
+    var isPickup = true
+    var fullAmount = String()
     //MARK: -> View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(productDaata)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         checkOutBtn.isUserInteractionEnabled = true
         checkOutTableVw.delegate = self
@@ -77,12 +88,27 @@ class CheckOutVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         getCardList()
+        checkOutTableVw.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        checkOutTableVw.removeObserver(self, forKeyPath: "contentSize")
+           super.viewWillDisappear(true)
+       }
+       
+       override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+           if(keyPath == "contentSize"){
+               if let newvalue = change?[.newKey]
+               {
+                   let newsize  = newvalue as! CGSize
+                   tblHeight.constant = newsize.height
+               }
+           }
+       }
     
     
     //MARK: - Custom Api Func
     func getCardList(){
-      
         cardListVwModel.getCardListDetailApi()
         cardListVwModel.onSuccess = { [weak self] in
             self?.getCardListModel = self?.cardListVwModel.cardListInfo
@@ -94,7 +120,6 @@ class CheckOutVC: UIViewController {
 
     //MARK: -CustomFunc
     func getProductData(){
-        print(productDataa)
         if isTab == "ComingFromReturnPolicy" {
             productImg.sd_setImage(with: URL(string: productImageUrl + (productDataa?.body?.productID?.image?.first ?? "")), placeholderImage: UIImage(named: "profileIcon"))
             
@@ -102,16 +127,16 @@ class CheckOutVC: UIViewController {
             descriptionLbl.text = productDataa?.body?.productID?.description ?? ""
             brandLbl.text = "Brand: " + (productDataa?.body?.productID?.brandID?.name ?? "")
             sizeLbl.text = "Size: " + (productDataa?.body?.productID?.sizeID?.name ?? "")
-            rentLbl.text = "Rent: " + "$\(productDataa?.body?.totalDays ?? 0)/ Night"
-            depositlbl.text = "Deposit: " + "$\(productDataa?.body?.productID?.deposit ?? 0)"
+            rentLbl.text = "Rent: " + "$\(productDataa?.body?.totalDays ?? 0) / Night"
+            depositlbl.text = "BOND: " + "$\(productDataa?.body?.productID?.deposit ?? 0)"
             totalrentLbl.text = "Total Rent: " + "$\( self.createdOrderData?.body?.productPrice ?? 0)"
 //            var serviceCharge = Int(productDataa?.body?.serviceCharge ?? "") ?? 0
-            serviceChargeslbl.text = "Service Charge Includes: " + "$\(serviceCharge)"
+            serviceChargeslbl.text = "Closet Protection: " + "$\(Int(serviceCharge))"
             let serviceChargeIncluedRent = Double(self.createdOrderData?.body?.totalPrice ?? 0)
             print(self.createdOrderData?.body?.totalPrice ?? 0)
             var total = Double()
             total = Double(serviceChargeIncluedRent + (chaarges))
-            totalLbl.text = "Total: $\(total.formattedString)"
+            totalLbl.text = "Total: $ \(total.formattedString)"
             datelbl.text = "\(productDataa?.body?.startDate ?? "") To \(productDataa?.body?.startDate ?? "")"
             Singletone.shared.amount = productDataa?.body?.totalPrice ?? 0
             if productDaata?.body?.facilities?.pickup == 0 {
@@ -123,8 +148,11 @@ class CheckOutVC: UIViewController {
 
             if productDaata?.body?.facilities?.deleivery == 0 {
                 lblExpresss.isHidden = true
+                shippVieww.isHidden = true
+                shipHeight.constant = 0
             } else {
                 pickVIeww.isHidden = false
+                shippVieww.isHidden = false
             }
         } else {
             productImg.sd_setImage(with: URL(string: productImageUrl + (productDaata?.body?.image?.first ?? "")), placeholderImage: UIImage(named: "profileIcon"))
@@ -133,21 +161,27 @@ class CheckOutVC: UIViewController {
             descriptionLbl.text = productDaata?.body?.description ?? ""
             brandLbl.text = "Brand: " + (productDaata?.body?.brandID?.name ?? "")
             sizeLbl.text = "Size: " + (productDaata?.body?.sizeID?.name ?? "")
-            rentLbl.text = "Rent: " + "$\(productDaata?.body?.price ?? 0)/ Night"
-            depositlbl.text = "Deposit: " + "$\(productDaata?.body?.deposit ?? 0)"
-            totalrentLbl.text = "Total Rent: " + ("$\(( self.createdOrderData?.body?.totalPrice ?? 0))".removingPercentEncoding ?? "")
+            rentLbl.text = "Rent: " + "$\(productDaata?.body?.price ?? 0) / Night"
+            depositlbl.text = "BOND: " + "$\(productDaata?.body?.deposit ?? 0)"
+            totalrentLbl.text = "Total Rent: \(fullAmount)"
+//            totalrentLbl.text = "Total Rent: " + ("$ \(( self.createdOrderData?.body?.totalPrice ?? 0))".removingPercentEncoding ?? "")
             var totalServiceCharge = chaarges * Double(self.createdOrderData?.body?.totalPrice ?? 0)
-            serviceChargeslbl.text = "Service Charge Includes: " + "$\(2)"
-            if productDaata?.body?.facilities?.pickup == 0 {
-                pickVIeww.isHidden = true
-            } else {
+            serviceChargeslbl.text = "Closet Protection: " + "$\(Int(serviceCharge))"
+            if isPickup == true {
                 pickVIeww.isHidden = false
-            }
-            if productDaata?.body?.facilities?.deleivery == 0 {
                 lblExpresss.isHidden = true
+                shippVieww.isHidden = true
+                shipHeight.constant = 0
+                lblPickTitle.text = "Pick Up"
+                lblAddressOrText.text = "Please reach out to closet owner for pickup details."
             } else {
-                pickVIeww.isHidden = false
+                pickVIeww.isHidden = true
+                lblExpresss.isHidden = false
+                shippVieww.isHidden = false
+                lblPickTitle.text = "Delivery"
+                lblAddressOrText.text = "Please reach out to closet owner for delivery details."
             }
+            
             let serviceChargeIncluedRent = Double(self.createdOrderData?.body?.totalPrice ?? 0)
             print(self.createdOrderData?.body?.totalPrice ?? 0)
             var total = Double()
@@ -155,7 +189,8 @@ class CheckOutVC: UIViewController {
             totalLbl.text = "Total: $\(total.formattedString)"
             
             print(self.createdOrderData?.body?.totalPrice ?? 0)
-            totalLbl.text = "Total: $\((serviceChargeIncluedRent + chaarges).formattedString)"
+//            totalLbl.text = "Total: $\((serviceChargeIncluedRent + chaarges).formattedString)"
+            totalLbl.text = "Total: \(fullAmount)"
             datelbl.text = "\(createdOrderData?.body?.startDate ?? "") To \(createdOrderData?.body?.endDate ?? "")"
             Singletone.shared.amount = createdOrderData?.body?.totalPrice ?? 0
         }
@@ -173,15 +208,34 @@ class CheckOutVC: UIViewController {
     
     @IBAction func tapContinueBtn(_ sender: UIButton) {
         if Store.userDetails?.body?.idVerification == 0 {
+            isTab = "ComingFromEnterDetails"
             if isTab == "CheckOut" || isTab == "ComingFromEnterDetails"{
-                if getCardListModel?.body?.count ?? 0 != 0 {
-                    let vc = storyboard?.instantiateViewController(withIdentifier: "IdVerificationPopUpVC") as! IdVerificationPopUpVC
-                    vc.verifyObj = self
-                    self.navigationController?.present(vc, animated: true)
-                }else {
-                    CommonUtilities.shared.showSwiftAlert(message: "Please add card first.", isSuccess: .error)
+                if isPickup == true {
+                    let vc = storyboard?.instantiateViewController(withIdentifier: "UploadProofVC") as! UploadProofVC
+                    isTab = "IdVerificationAfterCheckOut"
+                    self.navigationController?.pushViewController(vc, animated: true)
+                } else {
+                    let vc = storyboard?.instantiateViewController(withIdentifier: "UploadProofVC") as! UploadProofVC
+                    isTab = "IdVerificationAfterCheckOut"
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
-            }else {
+              
+                
+                //                if isPickup == true{
+                //                    if getCardListModel?.body?.count ?? 0 != 0 {
+                //                        let vc = storyboard?.instantiateViewController(withIdentifier: "IdVerificationPopUpVC") as! IdVerificationPopUpVC
+                //                        vc.verifyObj = self
+                //                        self.navigationController?.present(vc, animated: true)
+                //                    }else {
+                //                        CommonUtilities.shared.showSwiftAlert(message: "Please add card first.", isSuccess: .error)
+                //                    }
+                //                } else {
+                //                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
+                //                    vc.selectedIndex = 2
+                //                    selectedType = 1
+                //                    self.navigationController?.pushViewController(vc, animated: false)
+                //                }
+            }else {                
                 let vc = storyboard?.instantiateViewController(withIdentifier: "UploadProofVC") as! UploadProofVC
                 isTab = "UploadProof"
                 self.navigationController?.pushViewController(vc, animated: true)
@@ -195,11 +249,6 @@ class CheckOutVC: UIViewController {
                         let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ViewReceiptVC") as! ViewReceiptVC
                         isTab = "ViewReceipt"
                         self?.navigationController?.pushViewController(vc, animated: false)
-
-//                        let vc = self?.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
-//                        vc.selectedIndex = 2
-//                        selectedType = 1
-//                        self?.navigationController?.pushViewController(vc, animated: true)
                     } else if value == 2 {
                         let vc = self?.storyboard?.instantiateViewController(withIdentifier: "ViewReceiptVC") as! ViewReceiptVC
                         isTab = "ViewReceipt"
@@ -212,7 +261,6 @@ class CheckOutVC: UIViewController {
                 self?.navigationController?.present(vc, animated: true)
             }
         }
-        
     }
     
     @IBAction func tapAddNewCardBtn(_ sender: UIButton) {
@@ -250,6 +298,10 @@ extension CheckOutVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
     @objc func deleteCard(sender: UIButton) {
         deleteCard(deleteParam: ["cardStripeId":getCardListModel?.body?[sender.tag].cardStripeID ?? ""])
     }
@@ -265,16 +317,7 @@ extension CheckOutVC: UITableViewDelegate, UITableViewDataSource {
 
 extension CheckOutVC: IdVerificationProtocol{
     func removeVerificationPop(address: Int) {
-//        let vc = self.storyboard?.instantiateViewController(withIdentifier: "MyProfileVC") as! MyProfileVC
-//        isTab = "IdVerificationAfterCheckOut"
-//        self.navigationController?.pushViewController(vc, animated: false)
-//
-        
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "UploadProofVC") as! UploadProofVC
-//        vc.comesFrom = comesFrom
-//        vc.callBack = { [self] in
-//            getProfileInfoApi()
-//        }
         isTab = "IdVerificationAfterCheckOut"
         comesFromGlobal = "Verify"
         self.navigationController?.pushViewController(vc, animated: true)

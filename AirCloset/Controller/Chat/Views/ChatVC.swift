@@ -42,14 +42,18 @@ class ChatVC: UIViewController {
         chatTableVw.dataSource = self
         blockLabel.text = blockedMessage
         userName.text = reciverName.capitalizeFirstLetter()
+        updatesChats = {
+            SocketIOManager.sharedInstance.socket.connect()
+            SocketIOManager.sharedInstance.connectUser()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        fetchMessages()
+        self.fetchMessages()
+        self.activateListeners()
         SocketIOManager.sharedInstance.newChat()
         keyboardHandling()
         isChatOpen = true
-        activateListeners()
         blockerView.isHidden = true
         if checkBlockStatus == true {
             btnBlockOutlet.setTitle("Unblock", for: .normal)
@@ -64,6 +68,7 @@ class ChatVC: UIViewController {
     }
     
     @objc func socketConnected(notification: Notification) {
+        self.fetchMessages()
         activateListeners()
     }
     

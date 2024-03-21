@@ -200,10 +200,10 @@ class CheckValidation{
             return false
         }
         
-        else if deposit <= 0{
-            CommonUtilities.shared.showSwiftAlert(message: "Please enter deposit amount", isSuccess: .error)
-            return false
-        }
+//        else if deposit <= 0{
+//            CommonUtilities.shared.showSwiftAlert(message: "Please enter deposit amount", isSuccess: .error)
+//            return false
+//        }
         else if shipping <= 0{
             CommonUtilities.shared.showSwiftAlert(message: "Please enter shipping amount", isSuccess: .error)
             return false
@@ -270,7 +270,7 @@ class CheckValidation{
             return false
         }
         else if expMonth.isBlank {
-            CommonUtilities.shared.showSwiftAlert(message: "Please Rnter Expiry Of Your Card", isSuccess: .error)
+            CommonUtilities.shared.showSwiftAlert(message: "Please select expiry date of card.", isSuccess: .error)
             return false
         }
         else if cvv.isBlank{

@@ -13,7 +13,7 @@ class MessageTVCell: UITableViewCell {
     @IBOutlet weak var msgTitleLbl: UILabel!
     @IBOutlet weak var msgDescLbl: UILabel!
     @IBOutlet weak var msgTimeLbl: UILabel!
-    
+    @IBOutlet weak var countView: CustomView!
     override func awakeFromNib() {
         super.awakeFromNib()
     }

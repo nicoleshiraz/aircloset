@@ -1,0 +1,6 @@
+framework module Pods_AirCloset {
+  umbrella header "Pods-AirCloset-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -7,6 +7,7 @@
 
 import UIKit
 import Cosmos
+import IQKeyboardManagerSwift
 
 class LeaveFeedbackVC: UIViewController, UITextViewDelegate {
     
@@ -14,9 +15,9 @@ class LeaveFeedbackVC: UIViewController, UITextViewDelegate {
     @IBOutlet weak var userNameLbl: UILabel!
     @IBOutlet weak var userImage: UIImageView!
     @IBOutlet weak var ratingView: CosmosView!
-    @IBOutlet weak var feedBackTxtVw: UITextView!
-    
+    @IBOutlet weak var feedBackTxtVw: IQTextView!
     @IBOutlet weak var feedbackView: CustomView!
+    
     var rateVM = FeedbackViewModel()
     var bookingID = String()
     var userDetails: ErID?
@@ -44,13 +45,13 @@ class LeaveFeedbackVC: UIViewController, UITextViewDelegate {
         userNameLbl.text = userDetails?.name ?? ""
     }
     
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if feedBackTxtVw.text == "Type.." {
-            feedBackTxtVw.text = ""
-        } else {
-            
-        }
-    }
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        if feedBackTxtVw.text == "Type.." {
+//            feedBackTxtVw.text = ""
+//        } else {
+//
+//        }
+//    }
     
     
     //MARK: -> Actions
@@ -62,7 +63,7 @@ class LeaveFeedbackVC: UIViewController, UITextViewDelegate {
     
     @IBAction func tapGvFeedBackBtn(_ sender: UIButton) {
         
-        if feedBackTxtVw.text == "" {
+        if feedBackTxtVw.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             CommonUtilities.shared.showSwiftAlert(message: "Please add feedback review.", isSuccess: .error)
         } else {
             createRate(rateParam: ["rating": ratingView.rating,"message": feedBackTxtVw.text ?? "","productId":productId,"review":"","orderId": bookingID])

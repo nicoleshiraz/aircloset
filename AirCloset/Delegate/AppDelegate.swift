@@ -11,6 +11,7 @@ import FacebookCore
 import UserNotifications
 
 var isChatOpen = false
+var updatesChats: (()->())?
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.enable = true
         SocketIOManager.sharedInstance.socket.connect()
+        SocketIOManager.sharedInstance.connectUser()
         // ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         registerForPushNotifications()
         sleep(2)
@@ -99,6 +101,8 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        getCount()
+        updatesChats?()
         if !isChatOpen {
             completionHandler([.sound, .alert, .badge])
         } else {
@@ -107,6 +111,7 @@ extension AppDelegate:UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,   didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        updatesChats?()
         if let userInfo = response.notification.request.content.userInfo as? [String:Any] {
             print("**********************")
             print(userInfo["data"] as? [String: Any] ?? [:])
@@ -164,5 +169,20 @@ extension AppDelegate {
             
            
         }
+    }
+}
+
+
+extension AppDelegate {
+    //MARK: - Count Emitter
+    private func getCount(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.socketConnected(notification:)), name: Notification.Name("socketConnected"), object: nil)
+        SocketIOManager.sharedInstance.countEmitter()
+    }
+    @objc func socketConnected(notification: Notification) {
+        SocketIOManager.sharedInstance.countEmitter()
+    }
+    func connect() {
+        SocketIOManager.sharedInstance.connectUser()
     }
 }

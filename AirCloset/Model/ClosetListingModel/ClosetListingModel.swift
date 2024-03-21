@@ -73,7 +73,7 @@ struct ClosetListingOrderByMeModel: Codable {
 struct ClosetListingOrderByMeModelBody: Codable {
     var id, startDate, endDate: String?
     var totalDays, productPrice, totalPrice, status: Int?
-    var serviceCharge: String?
+    var serviceCharge: Double?
     var phoneNumber, deleiveryStatus: Int?
     var countryCode, address: String?
     var isReserved, cancelStatus, orderStatus, feedBackStatus,orderType : Int?
@@ -132,7 +132,7 @@ struct ClosetListingOderedByOtherModel: Codable {
 struct ClosetListingOderedByOtherModelBody: Codable {
     var id, startDate, endDate: String?
     var totalDays, productPrice, totalPrice, status: Int?
-    var serviceCharge: String?
+    var serviceCharge: Double?
     var phoneNumber: Int?
     var countryCode, address: String?
     var isReserved, cancelStatus, orderStatus, deleiveryStatus, orderType: Int?

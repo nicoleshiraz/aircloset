@@ -311,13 +311,14 @@ struct ProductDetailModelBody: Codable {
     var deposit: Int?
     var facilities: Facilities?
     var shipping: Int?
-    var locationName, lat, long: String?
+    var locationName, lat, long : String?
     var isFavourite, isAvailable: Int?
     var brandID, sizeID, categoryID, styleID: ID?
     var colorID, conditionID: ID?
     var userID: UserID?
-    var rating: Double?
-    var termAddCondition, createdAt, updatedAt, thumbnail, serviceCharge: String?
+    var rating : Double?
+    var serviceCharge: Double?
+    var termAddCondition, createdAt, updatedAt, thumbnail: String?
 
     enum CodingKeys: String, CodingKey {
         case location
@@ -365,7 +366,7 @@ struct UserID: Codable {
     var token, bio, ranToken: String?
     var isVerified, isNotification: Int?
     var customerID, termAndCondition, stripeAccountID: String?
-    var wallet: Int?
+    var wallet: Double?
     var createdAt, updatedAt, deviceToken: String?
  
     enum CodingKeys: String, CodingKey {
@@ -403,4 +404,10 @@ func removeTrailingZeros(from input: String) -> String {
     }
     
     return components.joined(separator: ".")
+}
+
+extension Double {
+    var formattedStringWithoutDecimal: String {
+        return String(format: "%.0f", self)
+    }
 }

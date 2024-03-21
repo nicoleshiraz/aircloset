@@ -20,6 +20,7 @@ class BookingDetailsVC: UIViewController{
     
     //MARK: -> Outlets & Variables
     
+    @IBOutlet weak var bondLbl: UILabel!
     @IBOutlet weak var ChatView: UIView!
     @IBOutlet weak var heartVieww: UIView!
     @IBOutlet weak var orderTypeView: UIView!
@@ -107,7 +108,6 @@ class BookingDetailsVC: UIViewController{
         expressShippingVw.isHidden = true
         bookingDetColVw.delegate = self
         bookingDetColVw.dataSource = self
-//        reviewBtn.isUserInteractionEnabled = false        
         ratingLbl.isHidden = true
         btnProof.isHidden = true
         if isTab == "Explore" {
@@ -117,8 +117,8 @@ class BookingDetailsVC: UIViewController{
             bookingDetLbl.text = "Details"
             priceStackVwHgt.constant = 0
             reviewBtn.isUserInteractionEnabled = true
-            lblTrack.isHidden = true
-            trackVieww.isHidden = true
+//            lblTrack.isHidden = true
+//            trackVieww.isHidden = true
             getProductDetail(id: productID ?? "")
             lblShipped.isHidden = true
         } else if isTab == "AirClosetOrders" {
@@ -127,9 +127,9 @@ class BookingDetailsVC: UIViewController{
             getProductDeatilforPickup()
             lblShipped.isHidden = false
             reviewBtn.isUserInteractionEnabled = true
-            lblTrack.isHidden = true
+//            lblTrack.isHidden = true
             heartVieww.isHidden = true
-            trackVieww.isHidden = true
+//            trackVieww.isHidden = true
         } else if isTab == "MyClosetZeroIndex" {
             pickUpBtn.isHidden = false
             reviewBtn.isUserInteractionEnabled = true
@@ -141,8 +141,8 @@ class BookingDetailsVC: UIViewController{
             msgEditImage.isHidden = true
             dotsVw.isHidden = true
             expressShippingVw.isHidden = false
-            lblTrack.isHidden = true
-            trackVieww.isHidden = true
+//            lblTrack.isHidden = true
+//            trackVieww.isHidden = true
             lblShipped.isHidden = true
             heartLikeBtn.isHidden = true
             heartVieww.isHidden = true
@@ -151,8 +151,8 @@ class BookingDetailsVC: UIViewController{
         } else if isTab == "MyClosetFourthIndex" {
             bookingDetLbl.text = "Received Order"
             pickUpBtn.setTitle("Accept", for: .normal)
-            lblTrack.isHidden = true
-            trackVieww.isHidden = true
+//            lblTrack.isHidden = true
+//            trackVieww.isHidden = true
             reviewBtn.isUserInteractionEnabled = true
             heartVieww.isHidden = true
             heartLikeBtn.isHidden = true
@@ -163,10 +163,10 @@ class BookingDetailsVC: UIViewController{
             cancelBtn.isHidden = true
             pickUpBtn.setTitle("Received", for: .normal)
             bookingDetLbl.text = "Received Order"
-            lblTrack.isHidden = true
+//            lblTrack.isHidden = true
             reviewBtn.isUserInteractionEnabled = true
             heartLikeBtn.isHidden = true
-            trackVieww.isHidden = true
+//            trackVieww.isHidden = true
             lblShipped.isHidden = true
             heartVieww.isHidden = true
             getOrderDetail()
@@ -176,8 +176,8 @@ class BookingDetailsVC: UIViewController{
             cancelBtn.isHidden = true
             bookingDetLbl.text = "Received Order"
             pickUpBtn.setTitle("Give Rate & Review", for: .normal)
-            lblTrack.isHidden = true
-            trackVieww.isHidden = true
+//            lblTrack.isHidden = true
+//            trackVieww.isHidden = true
             heartVieww.isHidden = true
             lblShipped.isHidden = true
         }
@@ -195,7 +195,7 @@ class BookingDetailsVC: UIViewController{
             self?.profileImage.sd_setImage(with: URL.init(string: imageURL + (self?.vwModel.productDetailInfo?.body?.userID?.image ?? "")),placeholderImage: UIImage(named: "profileIcon"))
             self?.nameLbl.text = self?.vwModel.productDetailInfo?.body?.userID?.name?.capitalizeFirstLetter() ?? ""
             self?.nameLblNew.text = "Product Type: \(self?.vwModel.productDetailInfo?.body?.categoryID?.name ?? "")"
-            var rate = String(format:"%.1f", self?.vwModel.productDetailInfo?.body?.rating ?? 0.0)
+            let rate = String(format:"%.1f", self?.vwModel.productDetailInfo?.body?.rating ?? 0.0)
             self?.ratingLbl.isHidden = true
             if rate == "0.1" {
                 self?.ratingLbl.text = "0"
@@ -224,15 +224,18 @@ class BookingDetailsVC: UIViewController{
                 self?.ratingLbl.text = "\(rate)"
                 self?.cosmosVw.text = rate
             }
+            self?.bondLbl.text = "$ \(self?.vwModel.productDetailInfo?.body?.deposit ?? 0)"
             self?.cosmosVw.rating = self?.vwModel.productDetailInfo?.body?.rating ?? 0.0
             self?.catagoryLbl.text =  self?.vwModel.productDetailInfo?.body?.name?.capitalizeFirstLetter() ?? ""
             self?.brandLbl.text = "Brand: " +  (self?.vwModel.productDetailInfo?.body?.brandID?.name ?? "")
             self?.sizeLbl.text = "Size: " +  (self?.vwModel.productDetailInfo?.body?.sizeID?.name ?? "")
-            self?.rentLbl.text = "Rent: " +  "$\(self?.vwModel.productDetailInfo?.body?.price ?? 0)" + "/Night"
-            self?.depositLbl.text = "Deposit: " +  "$\(self?.vwModel.productDetailInfo?.body?.deposit ?? 0)"
+            self?.rentLbl.text = "Rent: " +  "$ \(self?.vwModel.productDetailInfo?.body?.price ?? 0) /Night" + ""
+            self?.depositLbl.text = "BOND: " +  "$ \(self?.vwModel.productDetailInfo?.body?.deposit ?? 0)"
             self?.conditionLbl.text = "Used: " +  (self?.vwModel.productDetailInfo?.body?.conditionID?.name ?? "")
             self?.descriptionLbl.text =  self?.vwModel.productDetailInfo?.body?.description ?? ""
-            serviceCharge = Double(self?.vwModel.productDetailInfo?.body?.serviceCharge ?? "") ?? 0.0
+            serviceCharge = Double(self?.vwModel.productDetailInfo?.body?.serviceCharge ?? 0.0) ?? 0.0
+//            serviceCharge = 3.0
+
             self?.colorLbl.text = "Color: " +  (self?.vwModel.productDetailInfo?.body?.colorID?.name ?? "")
             self?.styleLbl.text = "Style: " +  (self?.vwModel.productDetailInfo?.body?.styleID?.name ?? "")
             self?.pickupAddressLbl.text = (self?.vwModel.productDetailInfo?.body?.location ?? "")
@@ -252,15 +255,13 @@ class BookingDetailsVC: UIViewController{
             }
             if self?.vwModel.productDetailInfo?.body?.isFavourite == 1{
                 self?.heartLikeBtn.setImage(UIImage(named: "Group 9395"), for: .normal)
-            }
-            else {
+            } else {
                 self?.heartLikeBtn.setImage(UIImage(named: "heart"), for: .normal)
             }
             
-            if self?.vwModel.productDetailInfo?.body?.userID?.isVerified == 0{
+            if self?.vwModel.productDetailInfo?.body?.userID?.idVerification == 0{
                 self?.tickMarkImg.isHidden = true
-            }
-            else {
+            } else {
                 self?.tickMarkImg.isHidden = false
             }
             self?.bookingDetColVw.reloadData()
@@ -275,10 +276,9 @@ class BookingDetailsVC: UIViewController{
             self?.profileImage.sd_setImage(with: URL.init(string: imageURL + (self?.orderVwModel.getSingleOrderModelInfo?.body?.buyerID?.image ?? "")),placeholderImage: UIImage(named: "profileIcon"))
             
             self?.nameLbl.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.buyerID?.name?.capitalizeFirstLetter() ?? ""
-            if self?.orderVwModel.getSingleOrderModelInfo?.body?.buyerID?.isVerified == 0{
+            if self?.orderVwModel.getSingleOrderModelInfo?.body?.buyerID?.idVerification == 0{
                 self?.tickMarkImg.isHidden = true
-            }
-            else {
+            } else {
                 self?.tickMarkImg.isHidden = false
             }
             
@@ -288,7 +288,7 @@ class BookingDetailsVC: UIViewController{
                 self?.pickUpNShippingLbl.text = "Location"
                 self?.exoressShippingView.isHidden = true
             } else {
-                self?.expressShippingLbl.text = "\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0)"
+                self?.expressShippingLbl.text = "$\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0)"
                 self?.exoressShippingView.isHidden = false
                 self?.domesticShippingLbl.isHidden = true
                 self?.pickUpNShippingLbl.text = "Shipping Details"
@@ -296,18 +296,18 @@ class BookingDetailsVC: UIViewController{
                 self?.pickupAddressLbl.text = "\(self?.orderVwModel.getSingleOrderModelInfo?.body?.address ?? "")"
             }
             
-            self?.lblTrack.text = "Tracking ID: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.trackingID ?? "")"
+//            self?.lblTrack.text = "Tracking ID: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.trackingID ?? "")"
             self?.nameLblNew.text = "Product Type: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.categoryID?.name ?? "")"
             self?.catagoryLbl.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.name?.capitalizeFirstLetter() ?? ""
             self?.brandLbl.text = "Brand: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.brandID?.name ?? "")"
             self?.sizeLbl.text = "Size: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.sizeID?.name ?? "")"
-            self?.rentLbl.text = "Rent: $\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0)"
-            self?.depositLbl.text = "Deposit: $\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)"
+            self?.rentLbl.text = "Rent: $\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0) /Night"
+            self?.depositLbl.text = "BOND: $\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)"
             self?.conditionLbl.text = "Condition: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.conditionID?.name ?? "")"
             self?.descriptionLbl.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.description ?? ""
             self?.colorLbl.text = "Color \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.colorID?.name ?? "")"
             self?.styleLbl.text = "Style: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.styleID?.name ?? "")"
-            self?.priceANdNightLbl.text = "$\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0) x \(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0) Nights"
+            self?.priceANdNightLbl.text = "$ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0) x \(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0) Nights"
             self?.bannerImage = self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.image ?? []
             
             if self?.vwModel.productDetailInfo?.body?.thumbnail ?? "" != "" {
@@ -402,26 +402,28 @@ class BookingDetailsVC: UIViewController{
                     self?.bookingDetLbl.text = "Order Cancelled"
                     self?.btnProof.isHidden = false
                 }
-            self?.totalPriceLbl.text = "$\(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalPrice ?? 0)"
-            self?.serviceChargeLbl.text = "$2"
+            self?.totalPriceLbl.text = "$ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalPrice ?? 0 - (self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0) )"
+            self?.serviceChargeLbl.text = "$ \(Int(self?.orderVwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? 0.0))"
+//            self?.serviceChargeLbl.text = "$ 3"
             self?.pickupDate.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.startDate ?? ""
             self?.returnDate.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.endDate ?? ""
             self?.pickupAddressLbl.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.location?.name ?? ""
-            self?.expressShippingLbl.text = "$\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0)"
+            self?.expressShippingLbl.text = "$ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0)"
             var total = Double()
-            
-            let total2 = (self?.orderVwModel.getSingleOrderModelInfo?.body?.totalPrice ?? Int(0.0))
-            let shipping = (self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? Int(0.0))
-            let serviceChargeString = self?.orderVwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? ""
-            var serviceCharge = Double(2)
+            self?.bondLbl.text = "$ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)"
+            let total22 = (self?.orderVwModel.getSingleOrderModelInfo?.body?.totalPrice ?? Int(0.0)) - (self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)
+            let total2 = (self?.orderVwModel.getSingleOrderModelInfo?.body?.productPrice ?? 0) * (self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0)
+            self?.totalPriceLbl.text = "$ \(total2)"
+            let serviceChargeString = Double(self?.orderVwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? 0)
+//            let serviceChargeString = 3
+            var serviceCharge = Double(serviceChargeString)
             serviceCharge = serviceCharge //* Double(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0)
             if self?.orderVwModel.getSingleOrderModelInfo?.body?.orderType == 0 {
-                total = Double(total2) + serviceCharge
+                total = Double(total22) + serviceCharge
             } else {
-                total = Double(total2 + shipping) + serviceCharge
+                total = Double(total22) + serviceCharge
             }
-            self?.totalpriceNSerchaLvl.text = "$\(total.formattedString)"
-            self?.totalpriceNSerchaLvl.text = "$\(total.formattedString)"
+            self?.totalpriceNSerchaLvl.text = "$ \(Int(total))"
             self?.facilitiesTblVw.reloadData()
             self?.bookingDetColVw.reloadData()
         }
@@ -461,12 +463,12 @@ class BookingDetailsVC: UIViewController{
             } else {
                 self?.tickMarkImg.isHidden = false
             }
-            self?.lblTrack.text = "Tracking ID: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.trackingID ?? "")"
+//            self?.lblTrack.text = "Tracking ID: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.trackingID ?? "")"
             self?.catagoryLbl.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.name?.capitalizeFirstLetter() ?? ""
             self?.brandLbl.text = "Brand: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.brandID?.name ?? "")"
             self?.sizeLbl.text = "Size: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.sizeID?.name ?? "")"
-            self?.rentLbl.text = "Rent: $\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0)".removingPercentEncoding
-            self?.depositLbl.text = "Deposit: $\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)".removingPercentEncoding
+            self?.rentLbl.text = "Rent: $ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0)".removingPercentEncoding
+            self?.depositLbl.text = "BOND: $ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)".removingPercentEncoding
             
             self?.bannerImage = self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.image ?? []
             if self?.vwModel.productDetailInfo?.body?.thumbnail ?? "" != "" {
@@ -482,12 +484,12 @@ class BookingDetailsVC: UIViewController{
             self?.styleLbl.text = "Style: \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.styleID?.name ?? "")"
             self?.domesticShippingLbl.isHidden = true
             self?.pickupAddressLbl.text = "\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.location?.name ?? "")"
-            self?.priceANdNightLbl.text = "$\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0) x \(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0) Nights"
+            self?.priceANdNightLbl.text = "$ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.price ?? 0) x \(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0) Nights"
             if self?.orderVwModel.getSingleOrderModelInfo?.body?.orderType == 0 {
                 self?.exoressShippingView.isHidden = true
                 self?.pickUpNShippingLbl.text = "Location"
             } else {
-                self?.expressShippingLbl.text = "\(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0)"
+                self?.expressShippingLbl.text = "$ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0)"
                 self?.exoressShippingView.isHidden = false
                 self?.domesticShippingLbl.isHidden = true
                 self?.pickUpNShippingLbl.text = "Shipping Details"
@@ -513,8 +515,8 @@ class BookingDetailsVC: UIViewController{
                     self?.pickUpBtn.setTitle("Order Accepted", for: .normal)
                     self?.lblShipped.isHidden = false
                     self?.cancelBtn.isHidden = true
-                } else {
-                    self?.pickUpBtn.setTitle("Order Pickup", for: .normal)
+                } else { //CONFIRM ORDER HAS BEEN PICKED UP
+                    self?.pickUpBtn.setTitle("Confirm order has been picked up", for: .normal)
                     self?.cancelBtn.isHidden = true
                     self?.lblShipped.isHidden = true
                 }
@@ -549,9 +551,11 @@ class BookingDetailsVC: UIViewController{
                 
                 if self?.orderVwModel.getSingleOrderModelInfo?.body?.orderType == 4 {
                     self?.pickUpBtn.setTitle("Completed", for: .normal)
+                    self?.btnProof.isHidden = false
                     self?.cancelBtn.isHidden = true
                     self?.lblShipped.isHidden = true
                 } else {
+                    self?.btnProof.isHidden = false
                     self?.pickUpBtn.setTitle("Completed", for: .normal)
                     self?.cancelBtn.isHidden = true
                     self?.lblShipped.isHidden = true
@@ -572,22 +576,33 @@ class BookingDetailsVC: UIViewController{
             default:
                 print("")
             }
-            self?.totalPriceLbl.text = "$\(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalPrice ?? 0)".removingPercentEncoding
-            self?.serviceChargeLbl.text = "$2"
+            self?.bondLbl.text = "$ \(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)"
+            guard let productPrice = self?.orderVwModel.getSingleOrderModelInfo?.body?.productPrice,
+                  let totalDays = self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays else {
+                // Handle the case where either productPrice or totalDays is nil
+                print("Either productPrice or totalDays is nil")
+                return
+            }
+            let totalWithoutShipping = productPrice * totalDays
+            self?.totalPriceLbl.text = "$ \(totalWithoutShipping)".removingPercentEncoding
+            self?.serviceChargeLbl.text = "$ \(Int(self?.orderVwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? 0.0))"
+//            self?.serviceChargeLbl.text = "$ 3"
             self?.pickupDate.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.startDate ?? ""
             self?.returnDate.text = self?.orderVwModel.getSingleOrderModelInfo?.body?.endDate ?? ""
             var total = Double()
-            let total2 = (self?.orderVwModel.getSingleOrderModelInfo?.body?.totalPrice ?? 0)
+            let total2 = (self?.orderVwModel.getSingleOrderModelInfo?.body?.totalPrice ?? 0) - (self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)
             let shipping = (self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.shipping ?? 0)
-            let serviceChargeString = self?.orderVwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? ""
-            var serviceCharge = Double(2)
+            let serviceChargeString = Double(self?.orderVwModel.getSingleOrderModelInfo?.body?.serviceCharge ?? 0.0) ?? 0
+            var serviceCharge = Double(serviceChargeString)
+//            var serviceCharge = Double(3)
+            var depositAmount = Double(self?.orderVwModel.getSingleOrderModelInfo?.body?.productID?.deposit ?? 0)
             serviceCharge = serviceCharge //* Double(self?.orderVwModel.getSingleOrderModelInfo?.body?.totalDays ?? 0)
             if self?.orderVwModel.getSingleOrderModelInfo?.body?.orderType == 0 {
                 total = Double(total2) + serviceCharge
             } else {
-                total = Double(total2 + shipping) + serviceCharge
+                total = Double(total2) + serviceCharge
             }
-            self?.totalpriceNSerchaLvl.text = "$\(total.formattedString)"
+            self?.totalpriceNSerchaLvl.text = "$ \(Int(total))"
             self?.facilitiesTblVw.reloadData()
             self?.bookingDetColVw.reloadData()
         }
@@ -744,6 +759,11 @@ class BookingDetailsVC: UIViewController{
         }
     }
     
+    @IBAction func btnCoverTap(_ sender: UIButton) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "AccountVC") as! AccountVC
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func tapEditBtn(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "AddClosetVC") as! AddClosetVC
         vc.comesFrom = "Edit"
@@ -794,10 +814,16 @@ class BookingDetailsVC: UIViewController{
     @IBAction func tapReadMoreBtn(_ sender: UIButton) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "ViewProofImage") as! ViewProofImage
         vc.proofImage = "\(returnImage)\(self.orderVwModel.getSingleOrderModelInfo?.body?.image ?? "")"
+        vc.status = "\(self.orderVwModel.getSingleOrderModelInfo?.body?.isDepositReturned ?? 0)"
+        vc.orderIDd = (self.orderVwModel.getSingleOrderModelInfo?.body?.id ?? "")
+        vc.callBack = {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
+            vc.selectedIndex = 2
+            selectedType = 1
+            self.navigationController?.pushViewController(vc, animated: false)
+        }
         vc.modalPresentationStyle = .overFullScreen
-        
         self.navigationController?.present(vc, animated: true)
-        
     }
     
     @IBAction func tapPickUpBtn(_ sender: UIButton) {
@@ -806,6 +832,8 @@ class BookingDetailsVC: UIViewController{
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "EnterDetailsVC") as! EnterDetailsVC
             self.navigationController?.pushViewController(vc, animated: true)
             vc.productData = vwModel.productDetailInfo
+            vc.serviceChargees = Double(self.vwModel.productDetailInfo?.body?.serviceCharge ?? 0.0) ?? 0.0
+//            vc.serviceChargees = 3.0
 
             isTab = "EnterDetails"
         } else if isTab == "AirClosetOrders"{
@@ -970,6 +998,10 @@ class BookingDetailsVC: UIViewController{
         vc.isTab = isTab
         if isTab == "AirClosetOrders" {
             vc.productID = orderVwModel.getSingleOrderModelInfo?.body?.productID?.id ?? ""
+        } else if isTab == "ReceivedAfterAccept"  {
+            vc.productID = orderVwModel.getSingleOrderModelInfo?.body?.productID?.id ?? ""
+        } else if isTab == "MyClosetFourthIndex"  {
+            vc.productID = orderVwModel.getSingleOrderModelInfo?.body?.productID?.id ?? ""
         } else {
             vc.productID = self.vwModel.productDetailInfo?.body?.id ?? ""
         }
@@ -1106,7 +1138,7 @@ extension BookingDetailsVC : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = facilitiesTblVw.dequeueReusableCell(withIdentifier: "FacilitiesTVC") as! FacilitiesTVC
-        if isTab == "Explore" {
+        if isTab == "Explore" || isTab == "MyClosetZeroIndex"{
             if self.vwModel.productDetailInfo?.body?.facilities?.pickup == 1 {
                 cell.pickUpView.isHidden = false
             } else {
@@ -1139,7 +1171,8 @@ extension BookingDetailsVC : UITableViewDelegate,UITableViewDataSource{
             } else {
                 cell.expressShippingVw.isHidden = true
             }
-                    }
+        } else {
+        }
         return cell
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

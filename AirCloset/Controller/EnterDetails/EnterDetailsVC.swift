@@ -21,8 +21,12 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
     @IBOutlet weak var pickUpTF: UITextField!
     @IBOutlet weak var deliveryTF: UITextField!
     
+    @IBOutlet weak var shipHeight: NSLayoutConstraint!
+    @IBOutlet weak var shipVieww: CustomView!
     @IBOutlet weak var expressShippingCharges: UILabel!
     
+    @IBOutlet weak var bondPickLbl: UILabel!
+    @IBOutlet weak var bondDeliveryLbl: UILabel!
     @IBOutlet weak var lblExpresss: UILabel!
     @IBOutlet weak var pickVieww: CustomView!
     @IBOutlet weak var deliveryCountryCode: UILabel!
@@ -118,6 +122,7 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
             getProductData()
         } else if isTab == "EditDetails" {
             setDataForEdit()
+//            getProductData()
             comesFrom = "Edit"
             enterDetailsLbl.text = "Edit Details"
             submitBtn.setTitle("Update", for: .normal)
@@ -130,13 +135,14 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
     //MARK: Edit Details
     
     func setDataForEdit() {
+        serviceCharge = productDataForEdit?.serviceCharge ?? 0.0
         productImg.sd_setImage(with: URL.init(string: productImageUrl + (productDataForEdit?.productID?.image?.first ?? "")), placeholderImage: UIImage(named: "profileIcon"))
         clothTitleLbl.text = productDataForEdit?.productID?.categoryID?.name
         descriptionLbl.text = productDataForEdit?.productID?.description ?? ""
         brandLbl.text = "Brand: " + (productDataForEdit?.productID?.brandID?.name ?? "")
         sizeLbl.text = "Size: " + (productDataForEdit?.productID?.sizeID?.name ?? "")
         rentLbl.text = "Rent: " + "$\(productDataForEdit?.productID?.price ?? 0)/ Night"
-        depositLbl.text = "Deposit: " + "$\(productDataForEdit?.productID?.deposit ?? 0)"
+        depositLbl.text = "BOND: " + "$\(productDataForEdit?.productID?.deposit ?? 0)"
         phoneNoPickTxtFld.text = "\(productDataForEdit?.phoneNumber ?? 0)"
         pickUpTF.text = productDataForEdit?.startDate ?? ""
         addressTxtFld.text = productDataForEdit?.address ?? ""
@@ -147,18 +153,19 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         var totalAmount = Double()
         totalAmount = Double(((productDataForEdit?.productPrice ?? 0) * (Int(productDataForEdit?.totalDays ?? 0) )))
         expressShippingCharges.text = "\(productDataForEdit?.productID?.deposit ?? 0)"
-        var expressShippingg = Double(productDataForEdit?.productID?.deposit ?? 0)
         cntryCdLbl.text = productDataForEdit?.countryCode
-        costbreakdownDelAmtLbl.text = "$ \(totalAmount)".removingPercentEncoding
+        costbreakdownDelAmtLbl.text = "$ \(totalAmount.formattedStringWithoutDecimal)"
         priceDetailDelLbl.text = costbreakdownDelLbl.text
         priceDetailDelAmtLbl.text = costbreakdownDelAmtLbl.text
-        serviceChargesDellbl.text = "$\(serviceCharge)"
-        
+        serviceChargesDellbl.text = "$\(serviceCharge.formattedString)"
+
         if productDataForEdit?.orderType == 0 {
-            totalCostDelLbl.text =  "$ " + ("\(totalAmount + (2))".removingPercentEncoding ?? "")
+            totalCostDelLbl.text = "\(productDataForEdit?.totalPrice ?? 0)"
         } else {
-            totalCostDelLbl.text =  "$ " + ("\(totalAmount + (2) + expressShippingg)".removingPercentEncoding ?? "")
+            totalCostDelLbl.text = "\(productDataForEdit?.totalPrice ?? 0)"
+//            totalCostDelLbl.text = "\(Int(total))"
         }
+        
         costBreakDownPickLbl.text = "$\(productDataForEdit?.productPrice ?? 0) x \(productDataForEdit?.totalDays ?? 0) Nights"
         costbreakdwnPickAmtLbl.text = "$ \((productDataForEdit?.productPrice ?? 0) * (Int(productDataForEdit?.totalDays ?? 0)))"
         priceDeatilPickLbl.text = costBreakDownPickLbl.text
@@ -166,9 +173,9 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         serviceChargesPickLbl.text = "$ \(serviceCharge)"
         
         if productDataForEdit?.orderType == 0 {
-            talAmountPickLbl.text = "$ " + ("\(totalAmount + (2))".removingPercentEncoding ?? "")
+            talAmountPickLbl.text = "$ " + ("\(totalAmount + (serviceChargees))".removingPercentEncoding ?? "")
         } else {
-            talAmountPickLbl.text = "$ " + ("\(totalAmount + (2) + expressShippingg)".removingPercentEncoding ?? "")
+            talAmountPickLbl.text = "$ " + ("\(totalAmount + (serviceChargees))".removingPercentEncoding ?? "")
         }
         nightsTxtFld.text = "\(productDataForEdit?.totalDays ?? 0)"
         nightVal = productDataForEdit?.totalDays ?? 0
@@ -186,12 +193,10 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
             pickUpTF.text = productDataForEdit?.startDate ?? ""
         } else {
             deliveryDateForDelivery()
-//            self.deliveryDate()
             self.btnPickup.isHidden = true
             self.btnDelivery.isHidden = false
             deliveryVw.isHidden = false
             pickUpVw.isHidden = true
-            //self.submitBtn.isUserInteractionEnabled = true
             pickUpImgVw.isHidden = true
             deliveryImgVw.isHidden = false
             deliveryBtn.setTitleColor(.white, for: .normal)
@@ -200,9 +205,13 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         }
         if productData?.body?.facilities?.deleivery == 0 {
             lblExpresss.isHidden = true
+            shipVieww.isHidden = true
+            shipHeight.constant = 0
         } else {
             lblExpresss.isHidden = false
+            shipVieww.isHidden = false
         }
+        
     }
     
     
@@ -212,13 +221,14 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
     func getProductData(){
         
         if comesFrom == "Edit" {
+            serviceCharge = productDataForEdit?.serviceCharge ?? 0.0
             productImg.sd_setImage(with: URL.init(string: productImageUrl + (productDataForEdit?.productID?.image?.first ?? "")), placeholderImage: UIImage(named: "profileIcon"))
             clothTitleLbl.text = productDataForEdit?.productID?.categoryID?.name
             descriptionLbl.text = productDataForEdit?.productID?.description ?? ""
             brandLbl.text = "Brand: " + (productDataForEdit?.productID?.brandID?.name ?? "")
             sizeLbl.text = "Size: " + (productDataForEdit?.productID?.sizeID?.name ?? "")
             rentLbl.text = "Rent: " + "$\(productDataForEdit?.productID?.price ?? 0)/ Night"
-            depositLbl.text = "Deposit: " + "$\(productDataForEdit?.productID?.deposit ?? 0)"
+            depositLbl.text = "BOND: " + "$\(productDataForEdit?.productID?.deposit ?? 0)"
             phoneNoPickTxtFld.text = "\(productDataForEdit?.phoneNumber ?? 0)"
             pickUpTF.text = productDataForEdit?.startDate ?? ""
             addressTxtFld.text = productDataForEdit?.address ?? ""
@@ -236,9 +246,9 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
             descriptionLbl.text = productData?.body?.description ?? ""
             brandLbl.text = "Brand: " + (productData?.body?.brandID?.name ?? "")
             sizeLbl.text = "Size: " + (productData?.body?.sizeID?.name ?? "")
-            rentLbl.text = "Rent: " + "$\(productData?.body?.price ?? 0)/ Night"
-            depositLbl.text = "Deposit: " + "$\(productData?.body?.deposit ?? 0)"
-            expressShippingCharges.text = "$\(productData?.body?.shipping ?? 0)"
+            rentLbl.text = "Rent: " + "$\(productData?.body?.price ?? 0) / Night"
+            depositLbl.text = "BOND: " + "$ \(productData?.body?.deposit ?? 0)"
+            expressShippingCharges.text = "$ \(productData?.body?.shipping ?? 0)"
             if productData?.body?.facilities?.pickup == 0 {
                 self.btnPickup.isHidden = true
                 self.btnDelivery.isHidden = false
@@ -255,8 +265,12 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
             }
             if productData?.body?.facilities?.deleivery == 0 {
                 lblExpresss.isHidden = true
+                shipVieww.isHidden = true
+                shipHeight.constant = 0
+
             } else {
                 lblExpresss.isHidden = false
+                shipVieww.isHidden = false
             }
         }
         
@@ -264,61 +278,59 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         if comesFrom == "Edit" {
             
             if productDataForEdit?.orderType == 0 {
-                costbreakdownDelLbl.text = "$\(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
+                costbreakdownDelLbl.text = "$ \(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
                 totalAmount = Double(((productDataForEdit?.productPrice ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0)))
             } else {
-                costbreakdownDelLbl.text = "$\(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
+                costbreakdownDelLbl.text = "$ \(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
                 totalAmount = Double(((productDataForEdit?.productPrice ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0)))
             }
         } else {
             if deliveryVw.isHidden {
-                costbreakdownDelLbl.text = "$\(productData?.body?.price ?? 0) x \(nightVal ) Nights"
+                costbreakdownDelLbl.text = "$ \(productData?.body?.price ?? 0) x \(nightVal ) Nights"
                 totalAmount = Double(((productData?.body?.price ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0)))
             } else {
-                costbreakdownDelLbl.text = "$\(productData?.body?.price ?? 0) x \(nightVal ) Nights"
+                costbreakdownDelLbl.text = "$ \(productData?.body?.price ?? 0) x \(nightVal ) Nights"
                 totalAmount = Double(((productData?.body?.price ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0)))
             }
         }
         
-        var serviceChargee = 2.0
-        priceDetailDelAmtLbl.text = "$ \(totalAmount.formattedString)"
+        var serviceChargee = serviceChargees
+        priceDetailDelAmtLbl.text = "$ \(Int(totalAmount))"
         if productData?.body?.facilities?.deleivery == 1 {
             if deliveryImgVw.isHidden == false {
                 totalAmount = totalAmount + Double((productData?.body?.shipping ?? 0))
             }
         }
-        if deliveryVw.isHidden {
-            if (Int(nightsTxtFld.text ?? "") ?? 0) > 0 {
-                serviceChargee = 2 * (Double(nightsTxtFld.text ?? "") ?? 0.0)
-            }
-        } else {
-            if (Int(nightTxtForDelivery.text ?? "") ?? 0) > 0 {
-                serviceChargee = 2 * (Double(nightTxtForDelivery.text ?? "") ?? 0.0)
-            }
-        }
-        //hhh
-        costbreakdownDelAmtLbl.text = "$ \(Int(totalAmount.formattedString) ?? 0)"
+        costbreakdownDelAmtLbl.text = "$ \(Int(totalAmount) )"
         priceDetailDelLbl.text = costbreakdownDelLbl.text
-        serviceChargesDellbl.text = "$ \(2)"
-        totalCostDelLbl.text =  "$ " + (("\(Int(totalAmount + (2)))").removingPercentEncoding ?? "")
+        serviceChargesDellbl.text = "$ \(serviceChargees)"
+        let totalCost = totalAmount + Double(serviceChargees) //+ Double((productData?.body?.deposit ?? 0))
+        bondDeliveryLbl.text = "$ \(productData?.body?.deposit ?? 0)"
+        let roundedValue = String(format: "$ %.2f", totalCost)
+//        totalCostDelLbl.text = roundedValue
+        totalCostDelLbl.text =  "$ \(Int(totalCost))"
         serviceChargees = serviceChargee
         if comesFrom == "Edit" {
             if productDataForEdit?.orderType == 0 {
-                costBreakDownPickLbl.text = "$\(productDataForEdit?.productPrice ?? 0) x \(nightsTxtFld.text ?? "") Nights"
-                costbreakdwnPickAmtLbl.text = "$ \((productDataForEdit?.productPrice ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0))".removingPercentEncoding
+                costBreakDownPickLbl.text = "$ \(productDataForEdit?.productPrice ?? 0) x \(nightsTxtFld.text ?? "") Nights"
+                costbreakdwnPickAmtLbl.text = "$ \((productDataForEdit?.productPrice ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0))"
+                bondPickLbl.text = "$\(productDataForEdit?.productID?.deposit ?? 0)"
             } else {
-                costBreakDownPickLbl.text = "$\(productDataForEdit?.productPrice ?? 0) x \(nightTxtForDelivery.text ?? "") Nights"
-                costbreakdwnPickAmtLbl.text = "$ \((productDataForEdit?.productPrice ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0))".removingPercentEncoding
+                costBreakDownPickLbl.text = "$ \(productDataForEdit?.productPrice ?? 0) x \(nightTxtForDelivery.text ?? "") Nights"
+                costbreakdwnPickAmtLbl.text = "$ \((productDataForEdit?.productPrice ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0))"
+                bondDeliveryLbl.text = "$ \(productDataForEdit?.productID?.deposit ?? 0)"
             }
           
         } else {
             
             if deliveryVw.isHidden {
-                costBreakDownPickLbl.text = "$\(productData?.body?.price ?? 0) x \(nightsTxtFld.text ?? "") Nights"
-                costbreakdwnPickAmtLbl.text = "$ \((productData?.body?.price ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0))".removingPercentEncoding
+                costBreakDownPickLbl.text = "$ \(productData?.body?.price ?? 0) x \(nightsTxtFld.text ?? "") Nights"
+                costbreakdwnPickAmtLbl.text = "$ \((productData?.body?.price ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0))"
+                bondPickLbl.text = "$\(productData?.body?.deposit ?? 0)"
             } else {
-                costbreakdownDelLbl.text = "$\(productData?.body?.price ?? 0) x \(nightTxtForDelivery.text ?? "") Nights"
-                costbreakdownDelAmtLbl.text = "$ \((productData?.body?.price ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0))".removingPercentEncoding
+                costbreakdownDelLbl.text = "$ \(productData?.body?.price ?? 0) x \(nightTxtForDelivery.text ?? "") Nights"
+                costbreakdownDelAmtLbl.text = "$ \((productData?.body?.price ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0))"
+                bondDeliveryLbl.text = "$\(productData?.body?.deposit ?? 0)"
             }
         }
         
@@ -326,28 +338,49 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
         if comesFrom == "Edit" {
             
             if productDataForEdit?.orderType == 0 {
-                costbreakdownDelLbl.text = "$\(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
+                costbreakdownDelLbl.text = "$ \(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
+//                totalAmount = Double(((productDataForEdit?.productPrice ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0) + (productDataForEdit?.productID?.deposit ?? 0)))
                 totalAmount = Double(((productDataForEdit?.productPrice ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0)))
             } else {
-                costbreakdownDelLbl.text = "$\(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
+                costbreakdownDelLbl.text = "$ \(productDataForEdit?.productPrice ?? 0) x \(nightVal ) Nights"
+//                totalAmount = Double(((productDataForEdit?.productPrice ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0) + (productDataForEdit?.productID?.deposit ?? 0)))
                 totalAmount = Double(((productDataForEdit?.productPrice ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0)))
             }
         } else {
+            
+//            let amountt = (productData?.body?.deposit ?? 0)
+            let amountt = 0
+
             if deliveryVw.isHidden {
-                costbreakdownDelLbl.text = "$\(productData?.body?.price ?? 0) x \(nightVal ) Nights"
-                totalAmount = Double(((productData?.body?.price ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0)))
+                costbreakdownDelLbl.text = "$ \(productData?.body?.price ?? 0) x \(nightVal ) Nights"
+                totalAmount = Double((productData?.body?.price ?? 0) * (Int(nightsTxtFld.text ?? "") ?? 0) + amountt)
             } else {
-                costbreakdownDelLbl.text = "$\(productData?.body?.price ?? 0) x \(nightVal ) Nights"
-                totalAmount = Double(((productData?.body?.price ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0)))
+                costbreakdownDelLbl.text = "$ \(productData?.body?.price ?? 0) x \(nightVal ) Nights"
+                totalAmount = Double((productData?.body?.price ?? 0) * (Int(nightTxtForDelivery.text ?? "") ?? 0) + amountt)
             }
         }
-        
-        
         priceDeatilPickLbl.text = costBreakDownPickLbl.text
         priceDetailPickAmotLbl.text = costbreakdownDelAmtLbl.text
-        serviceChargesPickLbl.text = "$ \(2.formattedString)"
+        serviceChargesPickLbl.text = "$ \(serviceChargees.formattedStringWithoutDecimal)"
         var finalAmount = Int(totalAmount)
-        talAmountPickLbl.text = "$ " + (("\(finalAmount + (2))").removingPercentEncoding ?? "")
+//        if comesFrom == "Edit" {
+//            talAmountPickLbl.text = "$ " + (("\(totalAmount + (serviceChargees))"))
+//        } else {
+//            talAmountPickLbl.text = "$ " + (("\(totalAmount + (serviceChargees))"))
+//        }
+        
+        if comesFrom == "Edit" {
+            let total = totalAmount + serviceChargees
+            let roundedValue = String(format: "$ %.2f", total)
+//            talAmountPickLbl.text = roundedValue
+            talAmountPickLbl.text = "$ \(Int(total))"
+        } else {
+            let total = totalAmount + serviceChargees
+            let roundedValue = String(format: "$ %.2f", total)
+//            talAmountPickLbl.text = roundedValue
+            talAmountPickLbl.text = "$ \(Int(total))"
+        }
+//
         print(finalAmount + 2,"priceeeeeeeeee")
     }
     
@@ -357,7 +390,7 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
             submitBtn.setTitle("Submit", for: .normal)
             btnPickup.setTitle("Submit", for: .normal)
             btnDelivery.setTitle("Submit", for: .normal)
-            getProductData()
+//            getProductData()
         } else if isTab == "EditDetails" {
             enterDetailsLbl.text = "Edit Details"
             submitBtn.setTitle("Update", for: .normal)
@@ -473,8 +506,13 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
                 }
             }
             self.deliveryDate()
-            let shipping = productData?.body?.shipping ?? 0
-            totalCostDelLbl.text =  "$ " + "\((shipping) + 2)"
+//            let shipping = Double(productData?.body?.shipping ?? 0) + serviceChargees + Double(productData?.body?.deposit ?? 0)
+//            totalCostDelLbl.text =  "$ " + "\(shipping)"
+            
+            let shipping = Double(productData?.body?.shipping ?? 0) + serviceChargees //+ Double(productData?.body?.deposit ?? 0)
+            let roundedValue = String(format: " %.2f", shipping)
+            totalCostDelLbl.text = "\(Int(shipping))"
+            
 //            totalCostDelLbl.text =  "$ " + "\((productData?.body?.shipping ?? 0) + (Int(productData?.body?.serviceCharge ?? "") ?? 0))"
         }
     }
@@ -508,7 +546,9 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
                     isTab = "ComingFromEnterDetails"
                     vc.comesFrom = "EnterDetails"
                     vc.chaarges = 2
+                    vc.fullAmount = self?.talAmountPickLbl.text ?? ""
                     productDaata = self?.productData
+                    vc.isPickup = true //pickup
                     vc.createdOrderData = self?.createOrderVwModel.createdorderDataInfo
                     self?.navigationController?.pushViewController(vc, animated: false)
                 }
@@ -603,11 +643,19 @@ class EnterDetailsVC: UIViewController, UITextFieldDelegate, UIPickerViewDelegat
                     listUpdateCallBack?()
                     self?.navigationController?.popViewController(animated: true)
                 } else {
-                    let vc = self?.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
-                    vc.selectedIndex = 2
-                    selectedType = 1
+//                    let vc = self?.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
+//                    vc.selectedIndex = 2
+//                    selectedType = 1
+//                    self?.navigationController?.pushViewController(vc, animated: false)
+                    let vc = self?.storyboard?.instantiateViewController(withIdentifier: "CheckOutVC") as! CheckOutVC
+                    isTab = "ComingFromEnterDetails"
+                    vc.comesFrom = "EnterDetails"
+                    vc.chaarges = 2
+                    vc.fullAmount = self?.totalCostDelLbl.text ?? ""
+                    productDaata = self?.productData
+                    vc.isPickup = false //delivery
+                    vc.createdOrderData = self?.createOrderVwModel.createdorderDataInfo
                     self?.navigationController?.pushViewController(vc, animated: false)
-                    
                 }
             }
         }

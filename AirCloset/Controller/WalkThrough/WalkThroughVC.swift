@@ -16,7 +16,7 @@ class WalkThroughVC: UIViewController {
     @IBOutlet weak var btnNext: UIButton!
     
     //Mark :--> Variables
-    var imgWalkThroughAry = ["walkThrough","walkThrough2","walkThrough"]
+    var imgWalkThroughAry = ["walkThrough","walkThrough","walkThrough"]
     var walkData = [WalkData]()
     var visibleIndex = 0
     var currentlyShowingIndex = 0
@@ -28,7 +28,7 @@ class WalkThroughVC: UIViewController {
         walkThroughColVw.delegate = self
         walkThroughColVw.dataSource = self
         walkData.append(WalkData(title: "Browse local closets", des: "A safe platform for users to connect with locals and rent outfits."))
-        walkData.append(WalkData(title: "List closet items", des: "Turn your closet into side hustle and start making $$ today."))
+        walkData.append(WalkData(title: "List closet items", des: "Turn your closet into side hustle and start making money today."))
         walkData.append(WalkData(title: "Save time and money", des: "Connect with locals and book outfits in advance or last minute.."))
         adPageControlVw.drawer = ExtendedDotDrawer()
         adPageControlVw.drawer = ExtendedDotDrawer(numberOfPages: 3, height: 6, width: 16, space: 5, raduis: 10, currentItem: 0, indicatorColor: UIColor.white, dotsColor: UIColor.lightGray, isBordered: false, borderColor: UIColor.clear, borderWidth: 0, indicatorBorderColor: UIColor.clear, indicatorBorderWidth: 0)

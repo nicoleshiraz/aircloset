@@ -9,6 +9,9 @@ import UIKit
 
 class ViewReceiptVC: UIViewController {
     
+    @IBOutlet weak var shippingView: UIView!
+    @IBOutlet weak var shippingLbl: UILabel!
+    @IBOutlet weak var lblBond: UILabel!
     @IBOutlet weak var productNameLbl: UILabel!
     @IBOutlet weak var serviceChargeLbl: UILabel!
     @IBOutlet weak var priceLblwithTotalNt: UILabel!
@@ -25,6 +28,7 @@ class ViewReceiptVC: UIViewController {
         super.viewDidLoad()
         getBookingData()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     //------------------------------------------------------
@@ -64,15 +68,32 @@ class ViewReceiptVC: UIViewController {
 extension ViewReceiptVC {
     private func getBookingData() {
         cardListVwModel.getRecipt(productId: Singletone.shared.productId ?? "") { [weak self] in
-            self?.productNameLbl.text = self?.cardListVwModel.reciptData?.productName ?? ""
-            self?.serviceChargeLbl.text = "$\(2)"
-            self?.priceLblwithTotalNt.text = "Price: $\(self?.cardListVwModel.reciptData?.productPrice ?? 0) × \(self?.cardListVwModel.reciptData?.totalDays ?? 0) Nights".removingPercentEncoding
-            self?.totalPriceOfTotalNtLbl.text = "$\(self?.cardListVwModel.reciptData?.totalPrice ?? 0)".removingPercentEncoding
+            self?.productNameLbl.text = (self?.cardListVwModel.reciptData?.productName ?? "").capitalizeFirstLetter()
+            self?.serviceChargeLbl.text = "$ \((self?.cardListVwModel.reciptData?.serviceCharge ?? 0).formattedString)"
+//            self?.serviceChargeLbl.text = "$ 3"
+            self?.priceLblwithTotalNt.text = "Price: $ \(self?.cardListVwModel.reciptData?.productPrice ?? 0) × \(self?.cardListVwModel.reciptData?.totalDays ?? 0) Nights".removingPercentEncoding
+            let serviceCharges = Int((self?.cardListVwModel.reciptData?.serviceCharge ?? 0.0))
+//            let serviceCharges = Int(3)
+            let shippingg = Int((self?.cardListVwModel.reciptData?.shipping ?? Int(0.0)))
+            let totall = (self?.cardListVwModel.reciptData?.productPrice ?? 0) * (self?.cardListVwModel.reciptData?.totalDays ?? 0)
+            if (self?.cardListVwModel.reciptData?.orderType ?? 0) == 0 {
+                self?.totalPriceOfTotalNtLbl.text = "$ \(totall)".removingPercentEncoding
+                self?.shippingView.isHidden = true
+            } else {
+                self?.totalPriceOfTotalNtLbl.text = "$ \(totall)".removingPercentEncoding
+                self?.shippingView.isHidden = false
+            }
             self?.pickUpDateLbl.text = self?.cardListVwModel.reciptData?.pickupDate ?? ""
             self?.returnDateLbl.text = self?.cardListVwModel.reciptData?.returnDate ?? ""
             var total = Double(self?.cardListVwModel.reciptData?.totalPrice ?? 0) + (self?.cardListVwModel.reciptData?.serviceCharge ?? 0.0)
-            self?.totalPriceLbl.text = "$\(total.formattedString)"
-
+            
+            total = total - Double((self?.cardListVwModel.reciptData?.deposit ?? Int(0.0)))
+            
+//            var total = Double(self?.cardListVwModel.reciptData?.totalPrice ?? 0) + 3.0
+            self?.totalPriceLbl.text = "$ \(Int(total))"
+            self?.shippingLbl.text = "$ \(self?.cardListVwModel.reciptData?.shipping ?? 0)"
+            self?.lblBond.text = "$ \(self?.cardListVwModel.reciptData?.deposit ?? 0)"
+            self?.lblBond.isHidden = false
         }
     }
 }

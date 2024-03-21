@@ -87,9 +87,9 @@ class AddPostVwModel : NSObject {
             
             var param = [String:Any]()
             if type == "1" {
-                param = ["image" : uplodImageInfo,"description" : description,"categoryId": categoryId,"brandId": brandId,"sizeId": sizeId, "conditionId" : conditionId,"price" : price, "deposit"  : deposit,"facilities" : json,"shipping" : shipping, "location": location,"lat" : lat,"long" : long,"isEdit":type,"isAvailable":1,"thumbnail":thumbnaill,"name":name] as [String : Any]
+                param = ["image" : uplodImageInfo,"description" : description,"categoryId": categoryId,"brandId": brandId,"sizeId": sizeId,"price" : price,"facilities" : json,"shipping" : shipping, "location": location,"lat" : lat,"long" : long,"isEdit":type,"isAvailable":1,"thumbnail":thumbnaill,"name":name] as [String : Any]
             } else {
-                param = ["image" : uplodImageInfo,"description" : description,"categoryId": categoryId,"brandId": brandId,"sizeId": sizeId, "conditionId" : conditionId,"price" : price, "deposit"  : deposit,"facilities" : json,"shipping" : shipping, "location": location,"lat" : lat,"long" : long,"isEdit":type,"isAvailable":2,"id":id,"thumbnail":thumbnaill,"name":name] as [String : Any]
+                param = ["image" : uplodImageInfo,"description" : description,"categoryId": categoryId,"brandId": brandId,"sizeId": sizeId,"price" : price,"facilities" : json,"shipping" : shipping, "location": location,"lat" : lat,"long" : long,"isEdit":type,"isAvailable":2,"id":id,"thumbnail":thumbnaill,"name":name] as [String : Any]
             }
                 param["video"] = video
             if styleId != "" {
@@ -133,6 +133,7 @@ class AddPostVwModel : NSObject {
             if colorId != "" {
                 param["colorId"] = colorId
             }
+             print(param)
             WebService.service(.productCreate, param: param, service: .post, showHud: true) { (addPostData :AddPostModel, data, json) in
                 print(param)
                 self.onSuccess?()

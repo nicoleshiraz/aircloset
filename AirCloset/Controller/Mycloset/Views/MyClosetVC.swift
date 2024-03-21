@@ -31,6 +31,7 @@ class MyClosetVC: UIViewController {
     var vwModel = AuthViewModel()
     var closetVwModel = MyClosetVwModel()
     var myClosetModel : MyClosetModel?
+    var myClosetList : [MyCloset]?
     
     var myclosetImgAry = ["image1","image2","image3","image4",
                           "image5","image6","image7","image8",
@@ -56,10 +57,23 @@ class MyClosetVC: UIViewController {
         ratingVw.isUserInteractionEnabled = false
     }
     
+    func showViewAsPopUp() {
+        if Store.newAccountPopUp == true {
+            Store.newAccountPopUp = false
+            let vc = AppStoryboard.Main.instance.instantiateViewController(identifier: "AccountVC") as! AccountVC
+            let nav = UINavigationController(rootViewController: vc)
+            nav.navigationBar.isHidden = true
+            vc.comesFrom = "Closet"
+            nav.modalPresentationStyle = .overFullScreen
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
+    
     func getMyClosetApi(){
         closetVwModel.getMyClosetApi()
         closetVwModel.onSuccess = { [weak self] in
             self?.myClosetModel = self?.closetVwModel.myClosetInfo
+            self?.myClosetList = self?.closetVwModel.myClosetInfo?.body?.myClosets?.reversed()
             self?.myProfileImgVw.sd_setImage(with: URL.init(string: imageURL + (self?.closetVwModel.myClosetInfo?.body?.userData?.image ?? "")), placeholderImage: UIImage(named: "profileIcon"))
             self?.nameLbl.text = self?.closetVwModel.myClosetInfo?.body?.userData?.name ?? ""
             if let rating = self?.closetVwModel.myClosetInfo?.body?.userData?.rating{
@@ -75,7 +89,7 @@ class MyClosetVC: UIViewController {
             }
             
             self?.subscriberLbl.text = "\(self?.closetVwModel.myClosetInfo?.body?.userData?.subscriberCount ?? 0) Subscriber"
-            if self?.closetVwModel.myClosetInfo?.body?.userData?.isVerified == 0{
+            if self?.closetVwModel.myClosetInfo?.body?.userData?.idVerification == 0{
                 self?.isVerifiedImg.isHidden = true
                 self?.isVerifiedWidthCons.constant = 0
             }
@@ -99,6 +113,7 @@ class MyClosetVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         getMyClosetApi()
+        showViewAsPopUp()
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
         
     }
@@ -113,6 +128,14 @@ class MyClosetVC: UIViewController {
         let vc = storyboard?.instantiateViewController(withIdentifier: "TermsPopUp") as! TermsPopUp
         vc.modalPresentationStyle = .overFullScreen
         self.navigationController?.present(vc, animated: true)
+    }
+    
+    @IBAction func btnInstaTap(_ sender: UIButton) {
+        CommonUtilities.shared.showAlert(message: "COMING SOON")
+    }
+    
+    @IBAction func btnTikTokTap(_ sender: UIButton) {
+        CommonUtilities.shared.showAlert(message: "COMING SOON")
     }
     
     @IBAction func tapWithdrawBtn(_ sender: UIButton) {
@@ -138,6 +161,7 @@ class MyClosetVC: UIViewController {
     
     @IBAction func tapRatingBtn(_ sender: UIButton) {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "ReviewVC") as! ReviewVC
+        vc.isTab = "MyClosetZeroIndex"
         self.navigationController?.pushViewController(vc, animated: false)
     }
     
@@ -153,15 +177,14 @@ class MyClosetVC: UIViewController {
 
 extension MyClosetVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let celll = UICollectionViewCell()
-        myClosetColVw.setEmptyData(msg: "No data found.", rowCount: closetVwModel.myClosetInfo?.body?.myClosets?.count ?? 0)
-        return closetVwModel.myClosetInfo?.body?.myClosets?.count ?? 0
+        myClosetColVw.setEmptyData(msg: "No data found.", rowCount: myClosetList?.count ?? 0)
+        return myClosetList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = myClosetColVw.dequeueReusableCell(withReuseIdentifier: "MyClosetCVCell", for: indexPath) as! MyClosetCVCell
         cell.myClosImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
-        cell.myClosImgVw.sd_setImage(with: URL.init(string: productImageUrl +  (self.closetVwModel.myClosetInfo?.body?.myClosets?[indexPath.row].image?.first ?? "")), placeholderImage: UIImage(named: "iconPlaceHolder"))
+        cell.myClosImgVw.sd_setImage(with: URL.init(string: productImageUrl +  (self.myClosetList?[indexPath.row].image?.first ?? "")), placeholderImage: UIImage(named: "iconPlaceHolder"))
         cell.requestVw.isHidden = true
         return cell
     }
@@ -172,7 +195,7 @@ extension MyClosetVC: UICollectionViewDelegate, UICollectionViewDataSource, UICo
             self.getMyClosetApi()
         }
         isTab = "MyClosetZeroIndex"
-        vc.productID = self.closetVwModel.myClosetInfo?.body?.myClosets?[indexPath.row].id
+        vc.productID = self.myClosetList?[indexPath.row].id
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

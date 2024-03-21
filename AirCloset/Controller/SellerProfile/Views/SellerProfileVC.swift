@@ -173,7 +173,7 @@ extension SellerProfileVC {
                 self?.subscribeNowBtn.setTitle("Subscribe Now", for: .normal)
 
             }
-            if self?.sellerVM.sellerData?.userData?.isVerified == 0 {
+            if self?.sellerVM.sellerData?.userData?.idVerification == 0 {
                 self?.imgVerify.isHidden = true
             } else {
                 self?.imgVerify.isHidden = false

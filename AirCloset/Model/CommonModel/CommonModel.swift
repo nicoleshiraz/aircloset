@@ -17,3 +17,8 @@ struct CommonModel : Codable{
 struct Body : Codable{
     
 }
+
+
+struct CountModel: Codable {
+    let count: Int
+}

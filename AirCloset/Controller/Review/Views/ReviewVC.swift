@@ -34,7 +34,6 @@ class ReviewVC: UIViewController {
             myClosetBtn.isHidden = false
             ordersBtn.isHidden = false
             getData(rateParam: ["type": "1"])
-            
         }else{
             stackViewBottom.constant = 0
             stackViewHeight.constant = 0
@@ -94,14 +93,6 @@ extension ReviewVC: UITableViewDelegate, UITableViewDataSource {
                 cell.setDataNew(reviewData: (reviewVM.reviewSingleData?[indexPath.row])!)
             }
         }
-        
-        //        if reviewVM.reviewData?.count ?? 0 > 0 {
-        //            cell.setData(reviewData: (reviewVM.reviewData?[indexPath.row])!)
-        //        } else {
-        //            if reviewVM.reviewSingleData?.count ?? 0 > 0 {
-        //                cell.setDataNew(reviewData: (reviewVM.reviewSingleData?[indexPath.row])!)
-        //            }
-        //        }
         cell.ratingView.isUserInteractionEnabled = false
         return cell
     }

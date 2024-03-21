@@ -40,10 +40,22 @@ class ExploreVC: UIViewController {
 //        callBackMyCloset = {
 //            self.getHomeData(type: 0)
 //        }
+        showViewAsPopUp()
         SocketIOManager.sharedInstance.socket.connect()
         self.txtSearch.addTarget(self, action: #selector(searchWorkersAsPerText(_ :)), for: .editingChanged)
     }
 
+    func showViewAsPopUp() {
+        if Store.newAccount == true {
+            Store.newAccount = false
+            Store.newAccountPopUp = true
+            let vc = AppStoryboard.Main.instance.instantiateViewController(identifier: "WarningPopupVC") as! WarningPopupVC
+            let nav = UINavigationController(rootViewController: vc)
+            nav.navigationBar.isHidden = true
+            nav.modalPresentationStyle = .overFullScreen
+            self.present(nav, animated: true, completion: nil)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {    
         getHomeData(type: 0)

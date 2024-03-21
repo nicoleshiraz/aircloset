@@ -195,7 +195,7 @@ struct SignUpBody: Codable {
     var token, bio, ranToken: String?
     var isVerified, isNotification: Int?
     var customerID, termAndCondition, stripeAccountID: String?
-    var wallet: Int?
+    var wallet: Double?
     var createdAt, updatedAt, referal_code: String?
 
     enum CodingKeys: String, CodingKey {

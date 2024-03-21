@@ -16,7 +16,7 @@ class SavedAccVC: UIViewController {
     @IBOutlet weak var withdrawView: CustomView!
     @IBOutlet weak var ammountTxtFld: UITextField!
     
-    var totalAmmount = Int()
+    var totalAmmount = Double()
     var callBack: (()->())?
     var withdraw = WithdrawVM()
     var selectedBankDelete : String?
@@ -51,10 +51,10 @@ class SavedAccVC: UIViewController {
     }
     
     @IBAction func tapWithdrawalBtn(_ sender: UIButton) {
-        let withDrawAmmount = Int(ammountTxtFld.text ?? "")
+        let withDrawAmmount = Double(ammountTxtFld.text ?? "")
         if ammountTxtFld.text == "" {
             CommonUtilities.shared.showSwiftAlert(message: "Please add amount to withdraw", isSuccess: .error)
-        } else if withDrawAmmount ?? 0 > totalAmmount{
+        } else if withDrawAmmount ?? 0.0 > totalAmmount{
             CommonUtilities.shared.showSwiftAlert(message: "Withdraw ammount should not be greater then total ammount.", isSuccess: .error)
         } else {
             self.withdrawAmmount(withDrawParam: ["amount": self.ammountTxtFld.text ?? ""])

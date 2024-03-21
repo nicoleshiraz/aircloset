@@ -83,7 +83,7 @@ extension ExploreTVCell: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.exploreImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.exploreImgVw.sd_setImage(with: URL.init(string: productImageUrl + (self.suggestion?[indexPath.row].image?.first ?? "")),placeholderImage: UIImage(named: "iconPlaceHolder"))
             cell.sizelTypeLbl.text = suggestion?[indexPath.row].sizeID?.name ?? ""
-            cell.priceLbl.text = "$\(suggestion?[indexPath.row].price ?? 0) Night"
+            cell.priceLbl.text = "$\(suggestion?[indexPath.row].price ?? 0) /Night"
             cell.heartBtn.tag = indexPath.row
             cell.heartBtn.addTarget(self, action: #selector(heartBtnClicked(sender:)), for: .touchUpInside)
             cell.setFavDataFor0(favData: suggestion?[indexPath.row].isFavourite ?? 1)
@@ -94,7 +94,7 @@ extension ExploreTVCell: UICollectionViewDelegate, UICollectionViewDataSource, U
             cell.exploreImgVw.sd_imageIndicator = SDWebImageActivityIndicator.gray
             cell.exploreImgVw.sd_setImage(with: URL.init(string: productImageUrl + (self.basedOnLikes?[indexPath.row].productID?.image?.first ?? "")),placeholderImage: UIImage(named: "iconPlaceHolder"))
             cell.sizelTypeLbl.text = basedOnLikes?[indexPath.row].productID?.sizeID?.name ?? ""
-            cell.priceLbl.text = "$\(basedOnLikes?[indexPath.row].productID?.price ?? 0) Night"
+            cell.priceLbl.text = "$\(basedOnLikes?[indexPath.row].productID?.price ?? 0) /Night"
             cell.heartBtn.tag = indexPath.row
             cell.heartBtn.addTarget(self, action: #selector(heartBtnClicked(sender:)), for: .touchUpInside)
             cell.setFavDataFor1(favData: basedOnLikes?[indexPath.row].productID?.isFavourite ?? 1)

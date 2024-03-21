@@ -79,7 +79,7 @@ struct UserIDD: Codable {
     let ranToken: String?
     let isVerified, isNotification: Int?
     let customerID, termAndCondition, stripeAccountID: String?
-    let wallet: Int?
+    let wallet: Double?
     let createdAt, updatedAt, deviceToken: String?
 
     enum CodingKeys: String, CodingKey {

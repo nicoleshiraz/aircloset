@@ -12,11 +12,12 @@ struct AllUser: Codable {
     var chatID, receiverID, name, image, blockedByMessage: String?
     var lastMessage: LastMessage?
     var isBlocked: Bool?
+    var unreadCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case chatID = "chatId"
         case receiverID = "receiverId"
-        case name, image, lastMessage, isBlocked, blockedByMessage
+        case name, image, lastMessage, isBlocked, blockedByMessage, unreadCount
     }
 }
 

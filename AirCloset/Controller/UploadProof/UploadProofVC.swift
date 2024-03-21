@@ -37,7 +37,7 @@ class UploadProofVC: UIViewController {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         if Store.userDetails?.body?.idVerification == 1 {
-            if isTab != "Return" {
+            if isTab == "IdVerificationAfterCheckOut" {
                 idVerificationLbl.isHidden = true
                 descLblTop.constant = 0
                 proofLbl.text = "Let’s upload your ID:"
@@ -56,7 +56,7 @@ class UploadProofVC: UIViewController {
             if isTab == "UploadProof"{
                 idVerificationLbl.isHidden = true
                 descLblTop.constant = 0
-            } else if isTab == "IdVerification"{
+            } else if isTab == "IdVerification" || isTab == "IdVerificationAfterCheckOut"{
                 uploadProofLbl.text = "ID Verification"
                 idVerificationLbl.isHidden = false
                 descLbl.text = "Please upload a valid Australian government issued ID for verification. This could be a drivers license or a passport."
@@ -64,7 +64,9 @@ class UploadProofVC: UIViewController {
                 uploadBtn.setTitle("ADD AN ID", for: .normal)
                 uploadProofTop.constant = 30
                 descLblTop.constant = 10
-                cameraImgVw.image = UIImage(named: "idCamera")
+//                cameraImgVw.image = UIImage(named: "idCamera")
+                cameraImgVw.image = UIImage(named: "Icon awesome-camera")
+                
             } else if isTab == "Return" {
                 idVerificationLbl.isHidden = true
                 descLblTop.constant = 0

@@ -100,6 +100,15 @@
 		80C5C2182A56F3DE00BB30F1 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C5C2172A56F3DE00BB30F1 /* ChatModel.swift */; };
 		AB1988BA2A7A36E700A52049 /* ReviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1988B92A7A36E700A52049 /* ReviewModel.swift */; };
 		AB19AAF72A72980600BBB8F2 /* No data-cuate.png in Resources */ = {isa = PBXBuildFile; fileRef = AB19AAF62A72980600BBB8F2 /* No data-cuate.png */; };
+		AB542A722BAABF2B0024DC73 /* StripeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB542A712BAABF2B0024DC73 /* StripeManager.swift */; };
+		AB542A752BAAC25C0024DC73 /* Stripe in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A742BAAC25C0024DC73 /* Stripe */; };
+		AB542A772BAAC25C0024DC73 /* StripeApplePay in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A762BAAC25C0024DC73 /* StripeApplePay */; };
+		AB542A792BAAC25C0024DC73 /* StripeCardScan in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A782BAAC25C0024DC73 /* StripeCardScan */; };
+		AB542A7B2BAAC25C0024DC73 /* StripeFinancialConnections in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A7A2BAAC25C0024DC73 /* StripeFinancialConnections */; };
+		AB542A7D2BAAC25C0024DC73 /* StripeIdentity in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A7C2BAAC25C0024DC73 /* StripeIdentity */; };
+		AB542A7F2BAAC25C0024DC73 /* StripePaymentSheet in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A7E2BAAC25C0024DC73 /* StripePaymentSheet */; };
+		AB542A812BAAC25C0024DC73 /* StripePayments in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A802BAAC25C0024DC73 /* StripePayments */; };
+		AB542A832BAAC25C0024DC73 /* StripePaymentsUI in Frameworks */ = {isa = PBXBuildFile; productRef = AB542A822BAAC25C0024DC73 /* StripePaymentsUI */; };
 		AB5EF2062A777FA800F41709 /* ReviewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5EF2052A777FA800F41709 /* ReviewVM.swift */; };
 		AB62ACB82A6E3CF000D0B263 /* BlockedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62ACB72A6E3CF000D0B263 /* BlockedVM.swift */; };
 		AB62ACBC2A6E3DAE00D0B263 /* BlockedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62ACBB2A6E3DAE00D0B263 /* BlockedModel.swift */; };
@@ -110,17 +119,18 @@
 		AB9215C12A822E0C00F301B6 /* DispatchThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9215C02A822E0C00F301B6 /* DispatchThread.swift */; };
 		AB9215C62A8269DF00F301B6 /* NotificationVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9215C52A8269DF00F301B6 /* NotificationVM.swift */; };
 		AB9215C82A826B7300F301B6 /* NotifModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9215C72A826B7300F301B6 /* NotifModel.swift */; };
+		AB96265E2BA1A5E3006480D3 /* WarningPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB96265D2BA1A5E3006480D3 /* WarningPopupVC.swift */; };
 		AB9CC9B32A6FA8C50087914B /* SellerProfileNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9CC9B22A6FA8C50087914B /* SellerProfileNew.swift */; };
 		AB9CC9BA2A6FE2640087914B /* MessageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9CC9B92A6FE2640087914B /* MessageVM.swift */; };
 		AB9CC9BD2A6FE6AD0087914B /* ChatData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9CC9BC2A6FE6AD0087914B /* ChatData.swift */; };
 		AB9DECEB2ADD424000F78077 /* ViewProofImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9DECEA2ADD424000F78077 /* ViewProofImage.swift */; };
 		ABAE238A2A80D25A00F15053 /* NotificationRedirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE23892A80D25A00F15053 /* NotificationRedirection.swift */; };
-		ABAE238C2A80D75600F15053 /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE238B2A80D75600F15053 /* InAppPurchase.swift */; };
 		ABB192362A67C14000E9FDCB /* CancelOrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB192352A67C14000E9FDCB /* CancelOrderModel.swift */; };
 		ABC3DE812A7B8986002C6ACC /* WithdrawVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DE802A7B8986002C6ACC /* WithdrawVM.swift */; };
 		ABC3DE832A7BA6B3002C6ACC /* WalletModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DE822A7BA6B3002C6ACC /* WalletModel.swift */; };
 		ABD23C452AB2D53B000C7574 /* BrandVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD23C442AB2D53B000C7574 /* BrandVC.swift */; };
 		ABD23C472AB2D62A000C7574 /* BrandVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD23C462AB2D62A000C7574 /* BrandVM.swift */; };
+		ABDCDB0A2B2072450048EBBB /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDCDB092B2072450048EBBB /* InAppPurchase.swift */; };
 		ABDEA4182ABB0CBC003612C5 /* ReferVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDEA4172ABB0CBC003612C5 /* ReferVC.swift */; };
 		ABDEA41A2ABB1CD1003612C5 /* TermsPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDEA4192ABB1CD1003612C5 /* TermsPopUp.swift */; };
 		ABE097E22AE8ECFF0026720F /* ExploreUserCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE097E02AE8ECFF0026720F /* ExploreUserCVC.swift */; };
@@ -273,6 +283,7 @@
 		80C5C2172A56F3DE00BB30F1 /* ChatModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		AB1988B92A7A36E700A52049 /* ReviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewModel.swift; sourceTree = "<group>"; };
 		AB19AAF62A72980600BBB8F2 /* No data-cuate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "No data-cuate.png"; sourceTree = "<group>"; };
+		AB542A712BAABF2B0024DC73 /* StripeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeManager.swift; sourceTree = "<group>"; };
 		AB5EF2052A777FA800F41709 /* ReviewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewVM.swift; sourceTree = "<group>"; };
 		AB62ACB72A6E3CF000D0B263 /* BlockedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedVM.swift; sourceTree = "<group>"; };
 		AB62ACBB2A6E3DAE00D0B263 /* BlockedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedModel.swift; sourceTree = "<group>"; };
@@ -283,17 +294,18 @@
 		AB9215C02A822E0C00F301B6 /* DispatchThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchThread.swift; sourceTree = "<group>"; };
 		AB9215C52A8269DF00F301B6 /* NotificationVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationVM.swift; sourceTree = "<group>"; };
 		AB9215C72A826B7300F301B6 /* NotifModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifModel.swift; sourceTree = "<group>"; };
+		AB96265D2BA1A5E3006480D3 /* WarningPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningPopupVC.swift; sourceTree = "<group>"; };
 		AB9CC9B22A6FA8C50087914B /* SellerProfileNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SellerProfileNew.swift; sourceTree = "<group>"; };
 		AB9CC9B92A6FE2640087914B /* MessageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageVM.swift; sourceTree = "<group>"; };
 		AB9CC9BC2A6FE6AD0087914B /* ChatData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatData.swift; sourceTree = "<group>"; };
 		AB9DECEA2ADD424000F78077 /* ViewProofImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProofImage.swift; sourceTree = "<group>"; };
 		ABAE23892A80D25A00F15053 /* NotificationRedirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRedirection.swift; sourceTree = "<group>"; };
-		ABAE238B2A80D75600F15053 /* InAppPurchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
 		ABB192352A67C14000E9FDCB /* CancelOrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelOrderModel.swift; sourceTree = "<group>"; };
 		ABC3DE802A7B8986002C6ACC /* WithdrawVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawVM.swift; sourceTree = "<group>"; };
 		ABC3DE822A7BA6B3002C6ACC /* WalletModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletModel.swift; sourceTree = "<group>"; };
 		ABD23C442AB2D53B000C7574 /* BrandVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandVC.swift; sourceTree = "<group>"; };
 		ABD23C462AB2D62A000C7574 /* BrandVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandVM.swift; sourceTree = "<group>"; };
+		ABDCDB092B2072450048EBBB /* InAppPurchase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
 		ABDEA4172ABB0CBC003612C5 /* ReferVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferVC.swift; sourceTree = "<group>"; };
 		ABDEA4192ABB1CD1003612C5 /* TermsPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsPopUp.swift; sourceTree = "<group>"; };
 		ABE097E02AE8ECFF0026720F /* ExploreUserCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreUserCVC.swift; sourceTree = "<group>"; };
@@ -354,7 +366,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB542A7B2BAAC25C0024DC73 /* StripeFinancialConnections in Frameworks */,
+				AB542A792BAAC25C0024DC73 /* StripeCardScan in Frameworks */,
+				AB542A772BAAC25C0024DC73 /* StripeApplePay in Frameworks */,
+				AB542A7D2BAAC25C0024DC73 /* StripeIdentity in Frameworks */,
+				AB542A7F2BAAC25C0024DC73 /* StripePaymentSheet in Frameworks */,
 				75FD323ED22899AB6206CDC6 /* Pods_AirCloset.framework in Frameworks */,
+				AB542A832BAAC25C0024DC73 /* StripePaymentsUI in Frameworks */,
+				AB542A812BAAC25C0024DC73 /* StripePayments in Frameworks */,
+				AB542A752BAAC25C0024DC73 /* Stripe in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -713,6 +733,7 @@
 				34D1495D29D2CB3B00E58857 /* CustomButton.swift */,
 				34D1495E29D2CB3B00E58857 /* CustomTextField.swift */,
 				34D1495F29D2CB3B00E58857 /* CustomImageView.swift */,
+				AB542A712BAABF2B0024DC73 /* StripeManager.swift */,
 			);
 			path = HelperClasses;
 			sourceTree = "<group>";
@@ -1052,6 +1073,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		AB96265C2BA1A5C6006480D3 /* WarningPopup Screen  */ = {
+			isa = PBXGroup;
+			children = (
+				AB96265D2BA1A5E3006480D3 /* WarningPopupVC.swift */,
+			);
+			path = "WarningPopup Screen ";
+			sourceTree = "<group>";
+		};
 		AB9CC9B42A6FDF4F0087914B /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1115,6 +1144,14 @@
 				ABD23C462AB2D62A000C7574 /* BrandVM.swift */,
 			);
 			path = BrandSearch;
+			sourceTree = "<group>";
+		};
+		ABDCDB082B2072180048EBBB /* In App Purchase */ = {
+			isa = PBXGroup;
+			children = (
+				ABDCDB092B2072450048EBBB /* InAppPurchase.swift */,
+			);
+			path = "In App Purchase";
 			sourceTree = "<group>";
 		};
 		ABDEA4162ABB0CA7003612C5 /* Refer And Earn */ = {
@@ -1378,6 +1415,8 @@
 		B7C3F1B82A04CF18009AC296 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				AB96265C2BA1A5C6006480D3 /* WarningPopup Screen  */,
+				ABDCDB082B2072180048EBBB /* In App Purchase */,
 				ABDEA4162ABB0CA7003612C5 /* Refer And Earn */,
 				ABD23C432AB2D529000C7574 /* BrandSearch */,
 				ABE658E92AB18D5D00D66BF9 /* Contact US */,
@@ -1453,7 +1492,6 @@
 				B7C3F1C02A04D072009AC296 /* Constant.swift */,
 				B7C3F1CD2A04E6D8009AC296 /* Extension.swift */,
 				B7403C0D2A29D7BA00C974EB /* ExtensionVideo.swift */,
-				ABAE238B2A80D75600F15053 /* InAppPurchase.swift */,
 				ABAE23892A80D25A00F15053 /* NotificationRedirection.swift */,
 				B7C3F1BE2A04D072009AC296 /* Reachability.swift */,
 				B776B3EA2A37450400006F8B /* SingletonClass.swift */,
@@ -1564,6 +1602,16 @@
 			dependencies = (
 			);
 			name = AirCloset;
+			packageProductDependencies = (
+				AB542A742BAAC25C0024DC73 /* Stripe */,
+				AB542A762BAAC25C0024DC73 /* StripeApplePay */,
+				AB542A782BAAC25C0024DC73 /* StripeCardScan */,
+				AB542A7A2BAAC25C0024DC73 /* StripeFinancialConnections */,
+				AB542A7C2BAAC25C0024DC73 /* StripeIdentity */,
+				AB542A7E2BAAC25C0024DC73 /* StripePaymentSheet */,
+				AB542A802BAAC25C0024DC73 /* StripePayments */,
+				AB542A822BAAC25C0024DC73 /* StripePaymentsUI */,
+			);
 			productName = AirCloset;
 			productReference = 344C79D829D2B53E00A4A496 /* AirCloset.app */;
 			productType = "com.apple.product-type.application";
@@ -1592,6 +1640,9 @@
 				Base,
 			);
 			mainGroup = 344C79CF29D2B53D00A4A496;
+			packageReferences = (
+				AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */,
+			);
 			productRefGroup = 344C79D929D2B53E00A4A496 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1670,6 +1721,7 @@
 				B776B3E92A373BE700006F8B /* PayNowModel.swift in Sources */,
 				343BA9A129DBEAD900E180DA /* NotificationsTVCell.swift in Sources */,
 				662F7ABD29E9705E00623241 /* AddNewCardVC.swift in Sources */,
+				AB542A722BAABF2B0024DC73 /* StripeManager.swift in Sources */,
 				344DD28329F7D8250026D47C /* ReturnBookingDetailsVC.swift in Sources */,
 				3453C47D29DE9DB8007CC8FF /* CheckOutVC.swift in Sources */,
 				66E3FF3629EAE2750045F94A /* EditProfileVC.swift in Sources */,
@@ -1711,7 +1763,6 @@
 				AB9CC9B32A6FA8C50087914B /* SellerProfileNew.swift in Sources */,
 				344DD28529F7E1210026D47C /* ReturnBookingCVC.swift in Sources */,
 				B73B57AE2A399B760034BBC3 /* GetBankListDetailModel.swift in Sources */,
-				ABAE238C2A80D75600F15053 /* InAppPurchase.swift in Sources */,
 				34D322D029E7CBF1007914A9 /* MyClosetCVCell.swift in Sources */,
 				AB62ACBC2A6E3DAE00D0B263 /* BlockedModel.swift in Sources */,
 				B7C3F1C22A04D072009AC296 /* Reachability.swift in Sources */,
@@ -1779,6 +1830,7 @@
 				AB9215C82A826B7300F301B6 /* NotifModel.swift in Sources */,
 				3486FDBC29D6B54B009F09F5 /* ForgotPasswordVC.swift in Sources */,
 				34F9D61B29D2C0C9008A9B6A /* WalkThroughCVCell.swift in Sources */,
+				AB96265E2BA1A5E3006480D3 /* WarningPopupVC.swift in Sources */,
 				B7C3F1C42A04D072009AC296 /* Constant.swift in Sources */,
 				344DD28829F7E7DE0026D47C /* ReturnPolicyPopUpVC.swift in Sources */,
 				3453C48429DED9BB007CC8FF /* AddClosetTVCell.swift in Sources */,
@@ -1793,6 +1845,7 @@
 				B75A7C472A568C91008115C3 /* AcceptRejectModel.swift in Sources */,
 				341B425C29D6FFAA00B38183 /* ExploreVC.swift in Sources */,
 				662F7AAF29E95A0600623241 /* AddAccountVC.swift in Sources */,
+				ABDCDB0A2B2072450048EBBB /* InAppPurchase.swift in Sources */,
 				347EEC2429FA97EF00D4CE55 /* TermsConditionsVC.swift in Sources */,
 				B76BB63A2A52F3AE0030CD91 /* GetSingleOrderModel.swift in Sources */,
 				AB62ACB82A6E3CF000D0B263 /* BlockedVM.swift in Sources */,
@@ -1976,7 +2029,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UL6P4CWL4N;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 295SHGW8TQ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AirCloset/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to your camera to take photos and videos.";
@@ -1990,8 +2043,8 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1999,10 +2052,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rentMyClosetNew.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airCloset.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_rentMyClosetNew2;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_19thMar;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2021,7 +2074,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = UL6P4CWL4N;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 295SHGW8TQ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AirCloset/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app needs access to your camera to take photos and videos.";
@@ -2035,8 +2088,8 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2044,10 +2097,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rentMyClosetNew.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.airCloset.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_rentMyClosetNew2;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = dev_19thMar;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2076,6 +2129,60 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stripe/stripe-ios-spm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 23.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AB542A742BAAC25C0024DC73 /* Stripe */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = Stripe;
+		};
+		AB542A762BAAC25C0024DC73 /* StripeApplePay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeApplePay;
+		};
+		AB542A782BAAC25C0024DC73 /* StripeCardScan */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeCardScan;
+		};
+		AB542A7A2BAAC25C0024DC73 /* StripeFinancialConnections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeFinancialConnections;
+		};
+		AB542A7C2BAAC25C0024DC73 /* StripeIdentity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripeIdentity;
+		};
+		AB542A7E2BAAC25C0024DC73 /* StripePaymentSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePaymentSheet;
+		};
+		AB542A802BAAC25C0024DC73 /* StripePayments */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePayments;
+		};
+		AB542A822BAAC25C0024DC73 /* StripePaymentsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB542A732BAAC25C0024DC73 /* XCRemoteSwiftPackageReference "stripe-ios-spm" */;
+			productName = StripePaymentsUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 344C79D029D2B53D00A4A496 /* Project object */;
 }

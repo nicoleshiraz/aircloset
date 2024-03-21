@@ -383,3 +383,11 @@ func getAddress(lat: Double, lng: Double,handler: @escaping (String) -> Void) {
        handler(address)
     })
 }
+
+
+extension Double {
+    func rounded(toDecimalPlaces places: Int) -> Double {
+        let multiplier = pow(10.0, Double(places))
+        return (self * multiplier).rounded() / multiplier
+    }
+}

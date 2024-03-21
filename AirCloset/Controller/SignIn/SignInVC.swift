@@ -139,7 +139,8 @@ class SignInVC: UIViewController {
                 }
                 
                 if Store.userDetails?.body?.otpVerified == 1 {
-                    
+                    Store.newAccount = false
+                    Store.newAccountPopUp = false
                     let vc = self?.storyboard?.instantiateViewController(identifier: "TabBarVC") as! TabBarVC
                     Store.autoLogin = true
                     let nav1 = UINavigationController()
@@ -257,6 +258,8 @@ extension SignInVC {
                     //    CommonUtilities.shared.showAlert(message: "Login Successfull", isSuccess: .success)
                     Store.socialLogin = true
                     self.vwModel.onSuccess = { [weak self] in
+                        Store.newAccount = false
+                        Store.newAccountPopUp = false
                         let vc = self?.storyboard?.instantiateViewController(identifier: "TabBarVC") as! TabBarVC
                         Store.autoLogin = true
                         let nav1 = UINavigationController()

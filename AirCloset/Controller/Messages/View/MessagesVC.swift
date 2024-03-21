@@ -29,13 +29,17 @@ class MessagesVC: UIViewController, UITextFieldDelegate {
         msgTableVw.dataSource = self
         self.searchTxtFld.delegate = self
         self.searchTxtFld.addTarget(self, action: #selector(searchWorkersAsPerText(_ :)), for: .editingChanged)
-
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getList()
+        getCount()
+        updatesChats = { [self] in
+            getList()
+            getCount()
+
+        }
     }
     
     //--------------------------------------------
@@ -82,6 +86,11 @@ extension MessagesVC: UITableViewDelegate, UITableViewDataSource {
         cell.msgDescLbl.text = chatData.lastMessage?.data
         cell.msgTimeLbl.text = chatData.lastMessage?.date
         cell.msgImgVw.imageLoad(imageUrl: "\(imageURL)\(chatData.image ?? "")")
+        if chatData.unreadCount ?? 0 > 0 {
+            cell.countView.isHidden = false
+        } else {
+            cell.countView.isHidden = true
+        }
         return cell
     }
     
@@ -109,4 +118,21 @@ extension MessagesVC {
             self?.msgTableVw.reloadData()
         }
     }
+    
+    //MARK: - Count Emitter
+    private func getCount(){
+        NotificationCenter.default.addObserver(self, selector: #selector(self.socketConnected(notification:)), name: Notification.Name("socketConnected"), object: nil)
+        SocketIOManager.sharedInstance.countEmitter()
+    }
+    @objc func socketConnected(notification: Notification) {
+        SocketIOManager.sharedInstance.countEmitter()
+    }
+    func connect() {
+        SocketIOManager.sharedInstance.connectUser()
+    }
+    
 }
+
+
+
+

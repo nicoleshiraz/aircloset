@@ -116,7 +116,7 @@ struct SignleProductReviewUserID: Codable {
     var deviceToken, token, bio, ranToken: String?
     var isVerified, isNotification: Int?
     var customerID, termAndCondition, stripeAccountID: String?
-    var wallet: Int?
+    var wallet: Double?
     var referalCode: String?
     var referalPoint: Int?
     var createdAt, updatedAt: String?

@@ -64,7 +64,7 @@ class WithdrawVC: UIViewController {
         vc.callBack = {
             self.getDetails()
         }
-        vc.totalAmmount = self.withdraw.walletData?.response?.wallet ?? 0
+        vc.totalAmmount = self.withdraw.walletData?.response?.wallet ?? 0.0
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -90,8 +90,44 @@ extension WithdrawVC {
     
     private func getDetails() {
         withdraw.getWithdrawList { [weak self] in
-            self?.balanceLbl.text = "\(self?.withdraw.walletData?.response?.wallet ?? 0) USD"
+            self?.balanceLbl.text = "\((self?.withdraw.walletData?.response?.wallet ?? 0).rounded(toPlaces: 0).formattedString) AUD"
             self?.withdrawTableVw.reloadData()
         }
     }
 }
+
+
+
+extension String {
+//    func convertDateFormat() -> String? {
+//        let dateFormatter = DateFormatter()
+//
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+////        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+////        dateFormatter.locale = Locale.current
+////        dateFormatter.timeZone = TimeZone.current
+//
+//        if let date = dateFormatter.date(from: self) {
+//            dateFormatter.dateFormat = "yyyy-MM-dd h:mm a"
+//            return dateFormatter.string(from: date)
+//        } else {
+//            return nil
+//        }
+//    }
+    
+    func convertDateFormat() -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        if let date = dateFormatter.date(from: self) {
+            dateFormatter.timeZone = TimeZone.current
+            dateFormatter.dateFormat = "yyyy-MM-dd h:mm a"
+        
+            return dateFormatter.string(from: date)
+        }
+        return nil
+    }
+
+}
+

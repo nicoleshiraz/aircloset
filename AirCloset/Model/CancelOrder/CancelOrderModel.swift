@@ -48,7 +48,7 @@ struct ReciptModel: Codable {
 struct ReciptModelBody: Codable {
     let productName: String?
     let serviceCharge: Double?
-    let productPrice: Int?
+    let productPrice, shipping, orderType: Int?
     let pickupDate, returnDate: String?
-    let totalPrice, totalDays: Int?
+    let totalPrice, totalDays, deposit: Int?
 }

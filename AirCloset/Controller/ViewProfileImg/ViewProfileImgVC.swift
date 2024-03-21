@@ -15,14 +15,12 @@ class ViewProfileImgVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         profileImgVw.image = profileImg
         
     }
 
     @IBAction func backBtnTapped(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
-        
     }
 
 }

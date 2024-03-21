@@ -101,7 +101,7 @@ struct ReviewModelUserID: Codable {
     var deviceToken, token, bio, ranToken: String?
     var isVerified, isNotification: Int?
     var customerID, termAndCondition, stripeAccountID: String?
-    var wallet: Int?
+    var wallet: Double?
     var createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
@@ -202,7 +202,7 @@ struct ReviewModelSingleProductUserID: Codable {
     var deviceToken, token, bio, ranToken: String?
     var isVerified, isNotification: Int?
     var customerID, termAndCondition, stripeAccountID: String?
-    var wallet: Int?
+    var wallet: Double?
     var createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {

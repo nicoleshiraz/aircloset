@@ -39,7 +39,7 @@ class AddClosetVC: UIViewController,UITextViewDelegate {
     var isSet = 0
     var selectedIndex = -1
     var showImage = ["Group 9417"]
-    var closetTitleAry = ["Category","Brand","Size","Rent","Deposit"]
+    var closetTitleAry = ["Category","Brand","Size","Rent"/*,"Bond"*/]
     var selectedImage : UIImage?
     
     var facilityArr = ["Dry-cleaning","Pick Up","Express Shipping"]
@@ -160,8 +160,8 @@ class AddClosetVC: UIViewController,UITextViewDelegate {
             self.conditionId = self.vwModel.productDetailInfo?.body?.conditionID?.id
             deposit = self.vwModel.productDetailInfo?.body?.deposit ?? 0
             rent = self.vwModel.productDetailInfo?.body?.price ?? 0
-            enteredRentStr = "\(self.vwModel.productDetailInfo?.body?.price ?? 0)"
-            enteredDepositStr = "\(self.vwModel.productDetailInfo?.body?.deposit ?? 0)"
+            enteredRentStr = "\(self.vwModel.productDetailInfo?.body?.price ?? 0) /Night"
+            enteredDepositStr = "\(self.vwModel.productDetailInfo?.body?.deposit ?? 0) "
             shippinggg = self.vwModel.productDetailInfo?.body?.shipping ?? 0
             domesticOwnShingLbl.text = "\(self.vwModel.productDetailInfo?.body?.shipping ?? 0)"
             facilityObj?.deleivery = self.vwModel.productDetailInfo?.body?.facilities?.deleivery
@@ -343,10 +343,10 @@ class AddClosetVC: UIViewController,UITextViewDelegate {
             if alertNo == 1 {
                 if self.rent == 0 {
                     textField.text = ""
-                    self.enteredRentStr = "$\(self.rent)/Night"
+                    self.enteredRentStr = "$\(self.rent) /Night"
                 } else {
                     textField.text = "\(self.rent)"
-                    self.enteredRentStr = "$\(self.rent)/Night"
+                    self.enteredRentStr = "$\(self.rent) /Night"
                 }
                 
             } else if alertNo == 2 {
@@ -366,7 +366,7 @@ class AddClosetVC: UIViewController,UITextViewDelegate {
                     if text.isBlank == false{
                         if let enteredAmount = Int(text) {
                             if alertNo == 1 {
-                                self.enteredRentStr = "$\(text)/Night"
+                                self.enteredRentStr = "$\(text) / Night"
                                 self.rent = enteredAmount
                             } else if alertNo == 2 {
                                 if self.rent == 0{
@@ -469,6 +469,9 @@ class AddClosetVC: UIViewController,UITextViewDelegate {
     //MARK: - IBAction
     @IBAction func tapBackBtn(_ sender: UIButton) {
         Singletone.shared.clothsTermsAndCon = nil
+        if comesFrom == "Edit" {
+            isTab = "MyClosetZeroIndex"
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -561,7 +564,11 @@ class AddClosetVC: UIViewController,UITextViewDelegate {
                     addPostVwModel.addPostApi(image: imageViews, video: self.imageInfo ?? ImageStructInfo(fileName: "", type: "", data: Data(), key: ""), description: descriptionTxtVw.text ?? "", categoryId: cataId ?? "", brandId: brandId ?? "", sizeId: sizeId ?? "", conditionId: conditionId ?? "", price: rent, deposit: deposit , colorId: colorId ?? "", styleId: styleId ?? "", facilities: facilityObj ?? AllFacilities(), shipping: shippinggg, location: locationLbl.text ?? "" , lat : "\(lat)" ,long : "\(long)",id: productID, type: type, thumbnaill: getImage,name: nameTxtFld.text ?? "")
                     addPostVwModel.onSuccess = { [weak self] in
                         Singletone.shared.clothsTermsAndCon = nil
-                        CommonUtilities.shared.showSwiftAlert(message: "Product added successfully", isSuccess: .success)
+                        if self?.comesFrom == "Edit" {
+                            CommonUtilities.shared.showSwiftAlert(message: "Product updated successfully", isSuccess: .success)
+                        } else {
+                            CommonUtilities.shared.showSwiftAlert(message: "Product added successfully", isSuccess: .success)
+                        }
                         if self?.comesFrom == "Edit" {
                             let vc = self?.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
                             vc.selectedIndex = 4
@@ -577,7 +584,12 @@ class AddClosetVC: UIViewController,UITextViewDelegate {
                     addPostVwModel.addPostApiWithoutVideo(image: imageViews, description: descriptionTxtVw.text ?? "", termAndCondition: Singletone.shared.clothsTermsAndCon ?? "", categoryId: cataId ?? "", brandId: brandId ?? "", sizeId: sizeId ?? "", conditionId: conditionId ?? "", price: rent, deposit: deposit , colorId: colorId ?? "", styleId: styleId ?? "", facilities: facilityObj ?? AllFacilities(), shipping: shippinggg, location: locationLbl.text ?? "" , lat : "\(lat)" ,long : "\(long)",id: productID, type: type,name: nameTxtFld.text ?? "")
                     addPostVwModel.onSuccess = { [weak self] in
                         Singletone.shared.clothsTermsAndCon = nil
-                        CommonUtilities.shared.showSwiftAlert(message: "Product added successfully", isSuccess: .success)
+                        if self?.comesFrom == "Edit" {
+                            CommonUtilities.shared.showSwiftAlert(message: "Product updated successfully", isSuccess: .success)
+                        } else {
+                            CommonUtilities.shared.showSwiftAlert(message: "Product added successfully", isSuccess: .success)
+                        }
+                        
                         if self?.comesFrom == "Edit" {
                             let vc = self?.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
                             vc.selectedIndex = 4

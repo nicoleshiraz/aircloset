@@ -28,7 +28,7 @@ struct WalletModelGetTransactionDetail: Codable {
     let name: String?
     let paidFrom: String?
     let paidTo: String?
-    let amount: Int?
+    let amount: Double?
     let stripeTrasectionID: String?
     let paymentMethod: Int?
     let createdAt, updatedAt: String?
@@ -47,5 +47,5 @@ struct WalletModelGetTransactionDetail: Codable {
 
 // MARK: - Response
 struct WalletModelResponse: Codable {
-    let wallet: Int?
+    let wallet: Double?
 }

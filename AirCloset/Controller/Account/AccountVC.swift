@@ -8,6 +8,7 @@
 import UIKit
 
 class AccountVC: UIViewController {
+    var comesFrom = String()
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -17,7 +18,11 @@ class AccountVC: UIViewController {
     //MARK: Actions
     
     @IBAction func tapBackBtn(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+        if comesFrom == "Closet" {
+            self.dismiss(animated: true)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func btnTerms(_ sender: Any) {
@@ -27,7 +32,8 @@ class AccountVC: UIViewController {
     }
     
     @IBAction func tapGetStartedBtn(_ sender: UIButton) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "SettingsVC") as! SettingsVC
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "TabBarVC") as! TabBarVC
+        vc.selectedIndex = 4
         self.navigationController?.pushViewController(vc, animated: false)
     }
 }

@@ -20,11 +20,12 @@ class AirClosetTVCell: UITableViewCell {
     @IBOutlet weak var finishLabel: UILabel!
     @IBOutlet weak var editCancelView: CustomView!
     @IBOutlet weak var editCancelVwHgt: NSLayoutConstraint!
-    @IBOutlet weak var viewReceiptBtn: UIButton!
+    @IBOutlet weak var viewReceiptBtn: CustomButton!
     @IBOutlet weak var sizeLbl: UILabel!
     @IBOutlet weak var pricePrNtLbl: UILabel!
     @IBOutlet weak var descritptionLbl: UILabel!
     
+    @IBOutlet weak var imgProof: CustomImageView!
     var isClickedd = Int()
     var editCallBack:(()->Void)?
     

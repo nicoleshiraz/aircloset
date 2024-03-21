@@ -73,6 +73,8 @@ enum DefaultKeys: String{
     case long
     case id
     case walkThrough
+    case newAccount
+    case newAccountPopUp
 
 }
 
@@ -148,6 +150,7 @@ enum API: String
     case verificationData               = "user/getVerification"
     case contactUss                     = "user/contactSupportCreate"
     case uploadReturnProof              = "user/orderImageUpload"
+    case returProof                     = "user/verifyClothReturnByProvider"
 }
 
 enum dateFormat: String {
